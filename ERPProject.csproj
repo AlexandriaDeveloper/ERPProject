@@ -104,9 +104,15 @@
   <ItemGroup>
     <Content Include="Content\bootstrap-rtl.css" />
     <Content Include="Content\bootstrap-rtl.min.css" />
+    <Content Include="Content\bootstrap-theme-rtl.css" />
+    <Content Include="Content\bootstrap-theme-rtl.min.css" />
+    <Content Include="Content\bootstrap-theme.css" />
+    <Content Include="Content\bootstrapCustomization.css" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Content\Style.css" />
     <Content Include="fonts\fontawesome-webfont.svg" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Index.html" />
     <Content Include="Scripts\angularjs\angular-mocks.js" />
@@ -121,6 +127,14 @@
     <Content Include="fonts\fontawesome-webfont.woff" />
     <Content Include="fonts\fontawesome-webfont.ttf" />
     <Content Include="fonts\fontawesome-webfont.eot" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="fonts\DroidNaskh-Bold.ttf" />
+    <Content Include="fonts\DroidNaskh-Regular.ttf" />
+    <Content Include="fonts\DroidKufi-Bold.ttf" />
+    <Content Include="fonts\DroidKufi-Regular.ttf" />
     <None Include="Scripts\bootstrap\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\app\app.js" />
     <Content Include="Scripts\app\controllers\HomeController.js" />
@@ -128,7 +142,9 @@
     <Content Include="Scripts\bootstrap\bootstrap-rtl.min.js" />
     <Content Include="Scripts\bootstrap\jquery-1.9.1.js" />
     <Content Include="Scripts\bootstrap\jquery-1.9.1.min.js" />
-    <Content Include="Views\home.html" />
+    <Content Include="Scripts\smarttable\smart-table.js" />
+    <Content Include="Scripts\smarttable\smart-table.min.js" />
+    <Content Include="templates\home.html" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>

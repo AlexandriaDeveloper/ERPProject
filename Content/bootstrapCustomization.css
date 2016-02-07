@@ -1,0 +1,14 @@
+﻿@font-face {
+    font-family: DroidNaskh Arabic Kufi ;
+    src: url(../fonts/DroidNaskh-Regular.ttf);
+}
+@font-face {
+    font-family: DroidKufi Arabic Kufi ;
+    src: url(../fonts/DroidKufi-Regular.ttf);
+}
+
+
+/* Navbar Customization*/
+.navbar-nav > li > .dropdown-menu {
+    text-align: right
+}

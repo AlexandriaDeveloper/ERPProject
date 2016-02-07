@@ -18,6 +18,11 @@
    
             templateUrl: 'templates/home.html',
             controller: 'HomeController'
+        })
+        .when("templates/home.html",
+        {
+            templateUrl: '/',
+            controller: 'HomeController'
         });
         $locationProvider.html5Mode(true);
     }
