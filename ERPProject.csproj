@@ -43,6 +43,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
       <Private>True</Private>
@@ -111,10 +119,25 @@
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\Style.css" />
+    <Content Include="Content\tether\tether-theme-arrows-dark.css" />
+    <Content Include="Content\tether\tether-theme-arrows-dark.min.css" />
+    <Content Include="Content\tether\tether-theme-arrows.css" />
+    <Content Include="Content\tether\tether-theme-arrows.min.css" />
+    <Content Include="Content\tether\tether-theme-basic.css" />
+    <Content Include="Content\tether\tether-theme-basic.min.css" />
+    <Content Include="Content\tether\tether.css" />
+    <Content Include="Content\tether\tether.min.css" />
+    <Content Include="Content\ui-bootstrap-csp.css" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Index.html" />
+    <Content Include="Scripts\angular-ui\ui-bootstrap-tpls.js" />
+    <Content Include="Scripts\angular-ui\ui-bootstrap-tpls.min.js" />
+    <Content Include="Scripts\angular-ui\ui-bootstrap.js" />
+    <Content Include="Scripts\angular-ui\ui-bootstrap.min.js" />
+    <Content Include="Scripts\angularjs\angular-animate.js" />
+    <Content Include="Scripts\angularjs\angular-animate.min.js" />
     <Content Include="Scripts\angularjs\angular-mocks.js" />
     <Content Include="Scripts\angularjs\angular-resource.js" />
     <Content Include="Scripts\angularjs\angular-resource.min.js" />
@@ -135,25 +158,74 @@
     <Content Include="fonts\DroidNaskh-Regular.ttf" />
     <Content Include="fonts\DroidKufi-Bold.ttf" />
     <Content Include="fonts\DroidKufi-Regular.ttf" />
+    <Content Include="Scripts\angularjs\angular-animate.min.js.map" />
     <None Include="Scripts\bootstrap\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\app\app.js" />
+    <Content Include="Scripts\app\controllers\DepartmentController.js" />
+    <Content Include="Scripts\app\controllers\EmployeeController.js" />
     <Content Include="Scripts\app\controllers\HomeController.js" />
+    <Content Include="Scripts\app\controllers\mymodalController.js" />
+    <Content Include="Scripts\app\controllers\PositionController.js" />
+    <Content Include="Scripts\app\directives\CommonDirective.js" />
+    <Content Include="Scripts\app\directives\EmployeeDirective.js" />
+    <Content Include="Scripts\app\services\DepartmentService.js" />
+    <Content Include="Scripts\app\services\EmployeeService.js" />
+    <Content Include="Scripts\app\services\HomeService.js" />
+    <Content Include="Scripts\app\services\PositionService.js" />
     <Content Include="Scripts\bootstrap\bootstrap-rtl.js" />
     <Content Include="Scripts\bootstrap\bootstrap-rtl.min.js" />
     <Content Include="Scripts\bootstrap\jquery-1.9.1.js" />
     <Content Include="Scripts\bootstrap\jquery-1.9.1.min.js" />
+    <Content Include="Scripts\Script.js" />
     <Content Include="Scripts\smarttable\smart-table.js" />
     <Content Include="Scripts\smarttable\smart-table.min.js" />
+    <Content Include="Scripts\tether\tether.js" />
+    <Content Include="Scripts\tether\tether.min.js" />
+    <Content Include="templates\employees\add.html" />
+    <Content Include="templates\employees\directives\employeeData.html" />
+    <Content Include="templates\employees\edit.html" />
+    <Content Include="templates\employees\search.html" />
+    <Content Include="templates\helper\modal.html" />
     <Content Include="templates\home.html" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="API\DepartmentsController.cs" />
+    <Compile Include="API\EmployeeController.cs" />
+    <Compile Include="API\PositionsController.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="API\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201602121507232_003-departmentTable.cs" />
+    <Compile Include="Migrations\201602121507232_003-departmentTable.Designer.cs">
+      <DependentUpon>201602121507232_003-departmentTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201602161654016_PositionTable.cs" />
+    <Compile Include="Migrations\201602161654016_PositionTable.Designer.cs">
+      <DependentUpon>201602161654016_PositionTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201602191739368_updateGenderColumn.cs" />
+    <Compile Include="Migrations\201602191739368_updateGenderColumn.Designer.cs">
+      <DependentUpon>201602191739368_updateGenderColumn.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201602191918002_updateEmployeeMetaData.cs" />
+    <Compile Include="Migrations\201602191918002_updateEmployeeMetaData.Designer.cs">
+      <DependentUpon>201602191918002_updateEmployeeMetaData.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201602192028106_updateEmployeeMetaData1.cs" />
+    <Compile Include="Migrations\201602192028106_updateEmployeeMetaData1.Designer.cs">
+      <DependentUpon>201602192028106_updateEmployeeMetaData1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Department.cs" />
+    <Compile Include="Models\Employee.cs" />
+    <Compile Include="Models\ERPContext.cs" />
+    <Compile Include="Models\Position.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModel\EmployeeVM.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
@@ -172,9 +244,24 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Controllers\" />
-    <Folder Include="Models\" />
-    <Folder Include="Scripts\app\directives\" />
-    <Folder Include="Scripts\app\services\" />
+    <Folder Include="Views\Home\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201602121507232_003-departmentTable.resx">
+      <DependentUpon>201602121507232_003-departmentTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201602161654016_PositionTable.resx">
+      <DependentUpon>201602161654016_PositionTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201602191739368_updateGenderColumn.resx">
+      <DependentUpon>201602191739368_updateGenderColumn.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201602191918002_updateEmployeeMetaData.resx">
+      <DependentUpon>201602191918002_updateEmployeeMetaData.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201602192028106_updateEmployeeMetaData1.resx">
+      <DependentUpon>201602192028106_updateEmployeeMetaData1.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

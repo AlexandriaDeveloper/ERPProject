@@ -1,0 +1,123 @@
+﻿
+            <div class="modal-header">
+                <a hre class="close" ng-click="cancel()" aria-hidden="true">&times;</a>
+               
+      
+                <h4 class="modal-title"> بيانات الموظف :{{selectedEmp.Name}} </h4>
+            </div>
+            <div class="modal-body">
+                <div class="well bs-component">
+              
+                    <form novalidate ng-submit="addEmployee(selectedEmp)" class="form-horizontal">
+                        <fieldset>
+                            <legend>
+                                <i class="fa fa-user-plus"></i>
+                                تعديل موظف
+                            </legend>
+                            <div class="form-group">
+                              
+
+                                <div class="col-lg-10">
+                                    <input type="text" class="form-control" id="inputEmail" placeholder="أدخل الأسم" ng-model="selectedEmp.Name">
+                                </div>
+                                <label for="inputEmail" class="col-lg-2 control-label">الأسم</label>
+
+
+
+                            </div>
+                            <div class="form-group">
+
+
+                                <div class="col-lg-10">
+                                    <input type="text" class="form-control" id="inputEmail" placeholder="أدخل أسم الشهرة" ng-model="selectedEmp.Nickname">
+                                </div>
+                                <label for="inputEmail" class="col-lg-2 control-label">أسم الشهرة</label>
+
+
+
+                            </div>
+                            <div class="form-group">
+
+
+                                <div class="col-lg-10">
+                                    <input type="text" class="form-control" id="inputEmail" placeholder="أدخل الرقم القومى" ng-model="selectedEmp.NationalId">
+                                </div>
+                                <label for="inputEmail" class="col-lg-2 control-label">الرقم القومى</label>
+
+
+
+                            </div>
+
+                            <div class="form-group">
+
+                                <div class="col-lg-4">
+                                    <select class="form-control" id="select">
+                                        <option>1</option>
+                                        <option>2</option>
+                                        <option>3</option>
+                                        <option>4</option>
+                                        <option>5</option>
+                                    </select>
+
+
+                                </div>
+                                <label for="select" class="col-lg-1 control-label">الدرجة</label>
+
+
+                                <div class="col-lg-2">
+                                    <select class="form-control" id="select">
+                                        <option>ذكر</option>
+                                        <option>أنثى</option>
+
+                                    </select>
+
+
+                                </div>
+                                <label for="select" class="col-lg-1 control-label">النوع</label>
+
+
+                                <div class="col-lg-2">
+                                    <input type="text" class="form-control" id="inputEmail" placeholder="أدخل كود الموظف" ng-model="selectedEmp.Code">
+                                </div>
+                                <label for="inputEmail" class="col-lg-2 control-label">الكود</label>
+
+
+
+                            </div>
+                            <div class="form-group">
+
+
+
+
+                                <div class="col-lg-10">
+                                    <select class="form-control" id="select">
+                                        <option>1</option>
+                                        <option>2</option>
+                                        <option>3</option>
+                                        <option>4</option>
+                                        <option>5</option>
+                                    </select>
+
+
+                                </div>
+                                <label for="select" class="col-lg-2 control-label">القسم</label>
+
+                            </div>
+                            <div class="modal-footer">
+
+                                <div class="col-lg-10 col-lg-offset-2">
+
+                                    <button type="button"class="btn btn-primary"  ng-click="ok();">
+                                        أضافة
+                                    </button>
+                                    <button type="button" class="btn btn-default"
+                                            ng-click="cancel();">
+                                        أغلاق
+                                    </button>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
+
+                </div>
+            </div>

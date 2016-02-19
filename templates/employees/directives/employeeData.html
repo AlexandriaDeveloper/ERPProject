@@ -1,0 +1,146 @@
+﻿<div class="validationError" ng-show="validationError">
+    <p ng-repeat="errMsg in validationError">{{errMsg}}</p>
+
+</div>
+
+
+<div class="well bs-component">
+
+    <form novalidate ng-submit="addEmployee(selectedEmp)" class="form-horizontal" name="addEmployeeForm">
+        <fieldset>
+            <legend>
+                <i class="fa fa-user-plus"></i>
+                {{title}}
+            </legend>
+            <div class="form-group">
+
+                <div class="col-lg-4">
+                    <input type="text" class="form-control" id="inputNickname" placeholder="أدخل أسم الشهرة" ng-model="selectedEmp.Nickname">
+                </div>
+                <label for="inputEmail" class="col-lg-2 control-label">أسم الشهرة</label>
+
+                <div class="col-lg-4" ng-class="{ 'has-error' : addEmployeeForm.inputName.$invalid && !addEmployeeForm.inputName.$pristine }">
+                    <input type="text" class="form-control" id="inputName" placeholder="أدخل الأسم" ng-model="selectedEmp.Name" ng-required="true" name="inputName">
+                    <p ng-show="addEmployeeForm.inputName$invalid && !addEmployeeForm.inputName.$pristine" class="help-block">الأسم مطلوب</p>
+                </div>
+
+                <label for="inputEmail" class="col-lg-2 control-label">الأسم</label>
+
+
+
+            </div>
+            <div class="form-group">
+
+
+
+
+
+            </div>
+            <div class="form-group">
+
+                <div class="col-lg-4">
+                    <input type="text" class="form-control" id="inputNationalId" placeholder="رقم التليفون" ng-model="selectedEmp.Phone" ng-minlength="7" ng-maxlength="11" name="inputNationalId">
+                    <p ng-show="addEmployeeForm.inputNationalId.$error.minlength" class="help-block">يجب أدخال 7 رقم</p>
+                    <p ng-show="addEmployeeForm.inputNationalId.$error.maxlength" class="help-block">يجب أدخال 11 رقم</p>
+                </div>
+                <label for="inputEmail" class="col-lg-2 control-label">تليفون</label>
+
+
+                <div class="col-lg-4">
+                    <input type="text" class="form-control" id="inputPhone" placeholder="أدخل الرقم القومى" ng-model="selectedEmp.NationalId" ng-minlength="14" ng-maxlength="14" name="inputPhone">
+                    <p ng-show="addEmployeeForm.inputPhone.$error.minlength" class="help-block">يجب أدخال 14 رقم</p>
+                    <p ng-show="addEmployeeForm.inputPhone.$error.maxlength" class="help-block">يجب أدخال 14 رقم</p>
+                </div>
+
+
+
+                <label for="inputEmail" class="col-lg-2 control-label">الرقم القومى</label>
+
+
+
+
+
+            </div>
+
+            <div class="form-group">
+
+
+
+
+                <div class="col-lg-4">
+                    <input type="text" class="form-control" id="inputCode" placeholder="أدخل كود الموظف"
+                           ng-model="selectedEmp.Code">
+                </div>
+                <label for="inputEmail" class="col-lg-2 control-label">الكود</label>
+
+
+                <div class="col-lg-4">
+                    <input type="text" type="email"
+                           class="form-control"
+                           id="inputEmail"
+                           placeholder="بريد الكترونى"
+                           ng-model="selectedEmp.Email"
+                           ng-pattern="/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/"
+                           name="inputEmail">
+                    <span ng-show="addEmployeeForm.inputEmail.$error.pattern">تأكد من ادخال عنوان البريد بشكل صحيح</span>
+                </div>
+
+                <label for="inputEmail" class="col-lg-2 control-label">بريدالكترونى</label>
+
+            </div>
+
+            <div class="form-group">
+
+
+                <div class="col-lg-4">
+                    <!--<select ng-model="selectedDepartment"
+                            ng-options="department.name for department in departments
+                    track by department.value"
+                            class="form-control">
+
+                </select>-->
+                    <select ng-model="selectedPosition"
+                            ng-options="position.value as position.name for position in positions"
+                            class="form-control"></select>
+
+
+                </div>
+                <label class="col-lg-2 control-label">الدرجة</label>
+
+
+                <div class="col-lg-4">
+                    <select ng-model="selectedGender"
+                            ng-options="gender.value as gender.label for gender in genders"
+                            class="form-control" ng-change="GetValue(selectedGender)"></select>
+
+
+
+
+                </div>
+                <label class="col-lg-2 control-label">النوع</label>
+
+            </div>
+
+
+
+            <div class="form-group">
+                <div class="col-lg-10">
+                    <select ng-model="selectedDepartment"
+                            ng-options="department.value as department.name for department in departments"
+                            class="form-control" ng-change="GetValue(selectedDepartment)"></select>
+
+                </div>
+                <label class="col-lg-2 control-label">القسم</label>
+
+            </div>
+            <div class="form-group">
+                <div class="col-lg-10 col-lg-offset-2">
+                    <button type="submit" ng-click="" class="btn btn-primary" ng-disabled="addEmployeeForm.$invalid">{{title}}</button>
+                    <a href="/" type="reset" class="btn btn-default">رجوع</a>
+
+                </div>
+            </div>
+        </fieldset>
+    </form>
+
+</div>

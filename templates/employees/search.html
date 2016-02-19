@@ -1,0 +1,222 @@
+﻿
+<a class="btn  btn-success"
+       href="/employee/add">
+    <i class="fa fa-user-plus"></i>
+    أضافة
+</a>
+<table st-safe-src="rowCollection" st-table="displayed" class="table table-striped table-hover">
+    <thead>
+
+        <tr>
+            <th class="col-sm-2"></th>
+            <th class="col-sm-3">
+                الأسم
+            </th>
+            <th class="col-sm-3">القسم</th>
+            <th class="col-sm-2">الرقم القومى</th>
+            <th class="col-sm-2">الكود</th>
+
+
+        </tr>
+    </thead>
+    <tbody class="example-animate-container">
+
+        <tr>
+            <td>
+                <span class="fa fa-search">
+                    أبحث عن
+
+                </span>
+            </td>
+            <td>
+                <div class="input-group-sm">
+
+                    <input type="text" class="form-control "
+                           st-search="{{namePredicate}}"
+                           placeholder="البحث بالأسم">
+                </div>
+
+            </td>
+            <td></td>
+            <td>
+                <div class="input-group-sm">
+
+                    <input type="text" class=" form-control input-sm" st-search="{{nationalIdPredicate}}"   placeholder="البحث بالرقم القومى">
+
+                </div>
+            </td>
+            <td>
+                <div class="input-group-sm">
+
+                    <input type="text" class=" form-control input-sm" st-search="{{codePredicate}}"   placeholder="الكود">
+
+                </div>
+            </td>
+
+        </tr>
+
+
+        <tr ng-repeat="row in displayed | filter: {Name:empName}" class="animate-repeat">
+
+
+            <td class="col-sm-2">
+
+                <div class="input-group-btn">
+                    <a href="/employee/edit/{{row.Id}}" class="btn btn-primary btn-xs"
+                         
+                        >
+                        <i class="fa fa-edit"></i>
+                        تعديل
+                    </a>
+                    <button class="btn btn-danger btn-xs">
+                        <i class="fa fa-remove"></i>
+                        حذف
+
+                    </button>
+
+
+
+                </div>
+            </td>
+            <td class="col-sm-3">{{row.Name}}</td>
+            <td class="col-sm-2">{{row.DepartmentId}}</td>
+            <td class="col-sm-3">{{row.NationalId}}</td>
+
+            <td class="col-sm-2">{{row.Code}}</td>
+
+
+
+
+        </tr>
+
+    </tbody>
+    <tfoot>
+        <tr>
+
+            <td class="text-center" st-pagination="" st-items-by-page="6" colspan="4"></
+        </tr>
+    </tfoot>
+</table>
+<!--<div my-modal></div>-->
+<!--<div class="modal fade" ng-show="modalshow" id="myModal" ng-cloak="">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title"> بيانات الموظف :{{selectedEmp.Name}} </h4>
+            </div>
+            <div class="modal-body">
+                <div class="well bs-component">
+
+                    <form novalidate ng-submit="updateEmployee(selectedEmp)" class="form-horizontal">
+                        <fieldset>
+                            <legend>
+                                <i class="fa fa-user-plus"></i>
+                                تعديل موظف
+                            </legend>
+                            <div class="form-group">
+
+
+                                <div class="col-lg-10">
+                                    <input type="text" class="form-control" id="inputEmail" placeholder="أدخل الأسم" ng-model="selectedEmp.Name">
+                                </div>
+                                <label for="inputEmail" class="col-lg-2 control-label">الأسم</label>
+
+
+
+                            </div>
+                            <div class="form-group">
+
+
+                                <div class="col-lg-10">
+                                    <input type="text" class="form-control" id="inputEmail" placeholder="أدخل أسم الشهرة" ng-model="selectedEmp.Nickname">
+                                </div>
+                                <label for="inputEmail" class="col-lg-2 control-label">أسم الشهرة</label>
+
+
+
+                            </div>
+                            <div class="form-group">
+
+
+                                <div class="col-lg-10">
+                                    <input type="text" class="form-control" id="inputEmail" placeholder="أدخل الرقم القومى" ng-model="selectedEmp.NationalId">
+                                </div>
+                                <label for="inputEmail" class="col-lg-2 control-label">الرقم القومى</label>
+
+
+
+                            </div>
+
+                            <div class="form-group">
+
+                                <div class="col-lg-4">
+                                    <select class="form-control" id="select">
+                                        <option>1</option>
+                                        <option>2</option>
+                                        <option>3</option>
+                                        <option>4</option>
+                                        <option>5</option>
+                                    </select>
+
+
+                                </div>
+                                <label for="select" class="col-lg-1 control-label">الدرجة</label>
+
+
+                                <div class="col-lg-2">
+                                    <select class="form-control" id="select">
+                                        <option>ذكر</option>
+                                        <option>أنثى</option>
+
+                                    </select>
+
+
+                                </div>
+                                <label for="select" class="col-lg-1 control-label">النوع</label>
+
+
+                                <div class="col-lg-2">
+                                    <input type="text" class="form-control" id="inputEmail" placeholder="أدخل كود الموظف" ng-model="selectedEmp.Code">
+                                </div>
+                                <label for="inputEmail" class="col-lg-2 control-label">الكود</label>
+
+
+
+                            </div>
+                            <div class="form-group">
+
+
+
+
+                                <div class="col-lg-10">
+                                    <select class="form-control" id="select">
+                                        <option>1</option>
+                                        <option>2</option>
+                                        <option>3</option>
+                                        <option>4</option>
+                                        <option>5</option>
+                                    </select>
+
+
+                                </div>
+                                <label for="select" class="col-lg-2 control-label">القسم</label>
+
+                            </div>
+                            <div class="modal-footer">
+
+                                <div class="col-lg-10 col-lg-offset-2">
+
+                                    <button type="submit" ng-click="" class="btn btn-primary">أضافة</button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">أغلاق</button>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>-->

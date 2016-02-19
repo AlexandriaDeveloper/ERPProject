@@ -1,3 +1,91 @@
-﻿body {
-    font-family:  DroidKufi Arabic Kufi 
+﻿@font-face {
+    font-family: DroidNaskh Arabic Kufi;
+    src: url(../fonts/DroidNaskh-Regular.ttf);
+}
+
+@font-face {
+    font-family: DroidKufi Arabic Kufi;
+    src: url(../fonts/DroidKufi-Regular.ttf);
+}
+
+body {
+    font-family: DroidKufi Arabic Kufi;
+}
+
+
+.example-animate-container {
+    list-style: none;
+    margin: 0;
+    padding: 0 10px;
+}
+
+.animate-repeat {
+    line-height: 30px;
+    list-style: none;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+    /*.animate-repeat.ng-move,*/
+    .animate-repeat.ng-enter
+    /*.animate-repeat.ng-leave*/ {
+        /*-webkit-transition:all ease .4s;
+    -moz-transition:all ease .4s;
+    -ms-transition:all ease .4s;
+    -o-transition:all ease .4s;
+    transition:all ease .4s;*/
+    }
+
+    .animate-repeat.ng-leave {
+        /*transition:all ease 2s;*/
+        -webkit-animation: slideout .4s ease-out;
+        -moz-animation: slideout .4s ease-out;
+        -ms-animation: slideout .4s ease-out;
+        -o-animation: slideout .4s ease-out;
+        animation: slideout .4s ease-out;
+        display: block;
+        z-index: 20;
+    }
+
+/*.animate-repeat.ng-leave,
+.animate-repeat.ng-move.ng-move-active,*/
+    .animate-repeat.ng-enter {
+        animation: slidein .4s ease-in;
+    }
+
+@keyframes slidein {
+
+    0% {
+        transform: translate3d(-900px, 0px, 0px);
+        animation-timing-function: ease-in;
+    }
+
+    100% {
+        transform: translate3d(0px, 0px, 0px);
+        animation-timing-function: ease-out;
+    }
+}
+
+@keyframes slideout {
+
+    0% {
+        transform: translate3d(0px, 0px, 0px);
+        animation-timing-function: ease-in;
+    }
+
+    100% {
+        transform: translate3d(-900px,0px, 0px);
+        animation-timing-function: ease-out;
+    }
+}
+
+.help-block {
+    color: #dc143c;
+
+}
+
+.help-block ng-hide {
+    
+
 }
