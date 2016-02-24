@@ -18,7 +18,7 @@ namespace ERPProject.Models
         public string NationalId { get; set; }
 
 
-
+        [Required]
         public int Code { get; set; }
       
         public int? DepartmentId { get; set; }
@@ -27,6 +27,10 @@ namespace ERPProject.Models
         public string Phone { get; set; }
         [DataType(DataType.EmailAddress,ErrorMessage = "تأكد من أدخال الأميل بشكل صحيح")]
         public string Email { get; set; }
+
+        public bool Sallary { get; set; }
+        public bool Other { get; set; }
+
         public Department Department { get; set; }
         public Position Position { get; set; }
     }

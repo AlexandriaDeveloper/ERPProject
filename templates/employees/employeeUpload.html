@@ -1,0 +1,40 @@
+﻿<div class="well bs-component">
+
+    <form novalidate ng-submit=""  class="form-horizontal" name="addEmployeeForm">
+
+        <fieldset>
+            <legend>
+                <i class="fa fa-user-plus"></i>
+                رفع بيانات موظفين
+            </legend>
+            <div class="form-group">
+
+                <div class="col-lg-10">
+                    <input type="file" class="form-control" name="uploadEmp" file-model = "myFile"/>
+                </div>
+
+                <label for="uploadBank" class="col-lg-2 control-label">رفع جميع الموظفين</label>
+            </div>
+            {{uploader.queue}}
+            <div class="form-group">
+
+                <div class="col-lg-10">
+                    <input type="file" class="form-control" name="uploadBank"  files-model="employees.file2" />
+                </div>
+
+                <label for="uploadBank" class="col-lg-2 control-label">رفع محولين على بنوك</label>
+            </div>
+            <div class="input-group-btn">
+                <div class="col-lg-pull-4">
+                    <button ng-click = "uploadFile()" class="btn btn-success">
+                        <i class="fa fa-upload"></i>
+                        رفع الملفات
+
+                    </button>
+                <a href="/employee/search" class="btn btn-default">العودة</a>
+                </div>
+
+            </div>
+        </fieldset>
+    </form>
+</div>

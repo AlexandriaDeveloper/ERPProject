@@ -7,9 +7,11 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.Description;
 using System.Web.Http.Results;
 using ERPProject.Models;
 using ERPProject.ViewModel;
+using Newtonsoft.Json;
 
 namespace ERPProject.API
 {
@@ -27,10 +29,11 @@ namespace ERPProject.API
         public IHttpActionResult Get()
         {
             _db = new ERPContext();
-           var employees = _db.Employees.AsQueryable();
-         
+          _db.Configuration.ProxyCreationEnabled = false;
+          var employees = _db.Employees.Include("Department" ).Include("Position").AsQueryable();
+    
           
-            return Ok(employees.OrderBy(x=>x.Name));
+            return Ok( employees.OrderBy(x=>x.Name));
         }
         [HttpGet()]
         public IHttpActionResult Get(int Id)
@@ -73,6 +76,32 @@ namespace ERPProject.API
            
 
 
+        }
+
+
+
+        //[HttpPost]
+        //public IHttpActionResult Post(HttpRequestMessage file,int id= 0)
+        //{
+        //    return Ok("");
+        //}
+
+
+        [ResponseType(typeof(Employee))]
+
+        public IHttpActionResult DeleteDepartment(int entityId)
+        {
+            _db= new ERPContext();
+            Employee employee = _db.Employees.Find(entityId);
+            if (employee == null)
+            {
+                return NotFound();
+            }
+
+            _db.Employees.Remove(employee);
+           _db.SaveChanges();
+
+            return Ok(new {msg= "Delete Successfully"});
         }
     }
 }

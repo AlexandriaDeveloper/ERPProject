@@ -6,11 +6,11 @@
         .controller('HomeController', HomeController);
 
     HomeController.$inject = [
-        '$scope', 'Home', '$rootScope'];
+        '$scope', 'Home'];
 
-    function HomeController($scope, Home, $rootScope) {
+    function HomeController($scope, Home) {
         $scope.title = Home.get({});
         console.log(Home.get({}));
-        $rootScope.message = "Hello from root";
+  
     }
 })();

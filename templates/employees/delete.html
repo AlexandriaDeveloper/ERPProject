@@ -1,0 +1,17 @@
+﻿<div class="alert alert-dismissible alert-danger">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <strong>أحترس </strong>
+
+    سوف تقوم بحذف
+    <a href="/employee/edit/{{selectedEmp.Id}}" class="alert-link">{{selectedEmp.Name}}</a>
+    هل انت متأكد ؟!!!
+
+</div>
+
+
+
+
+<button ng-click="deleteEmployee();" class="btn btn-danger">حذف</button>
+<a href="/employee/edit/{{selectedEmp.Id}}" class="btn btn-primary">تعديل</a>
+
+<a href="/employee/search" class="btn btn-info">العودة</a>
