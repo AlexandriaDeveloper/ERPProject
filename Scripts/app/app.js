@@ -11,17 +11,35 @@
             'EmployeeService',
             'DepartmentService',
             'PositionService',
+            'UploadService',
             //Custom Directive
 
             // 3rd Party Modules
             'smart-table',
             'ui.bootstrap'
-    ]).config(myConfig).service('fileUpload', ['$http', function ($http) {
+    ]).config(myConfig)
+        . directive('fileModel', ['$parse', function ($parse) {
+       
+        return {
+            restrict: 'A',
+            link: function (scope, element, attrs) {
+                var model = $parse(attrs.fileModel);
+                var modelSetter = model.assign;
+
+                element.bind('change', function () {
+                    scope.$apply(function () {
+                        modelSetter(scope, element[0].files[0]);
+                    });
+                });
+            }
+        };
+    }]).service('fileUpload', ['$http', function ($http) {
         this.uploadFileToUrl = function (file, uploadUrl) {
             var fd = new FormData();
             fd.append('file', file);
 
             $http.post(uploadUrl, fd, {
+                method: 'GET',
                 transformRequest: angular.identity,
                 headers: { 'Content-Type': undefined }
             })
@@ -64,7 +82,7 @@
                 .when('/employee/upload',
                 {
                     templateUrl: 'templates/employees/employeeUpload.html',
-                    controller: 'UploadEmployeeController'
+                    controller: 'UploadController'
                 })
                 .otherwise('/');
             $locationProvider.html5Mode(true);

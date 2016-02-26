@@ -1,6 +1,16 @@
-﻿<div class="well bs-component">
+﻿
 
-    <form novalidate ng-submit=""  class="form-horizontal" name="addEmployeeForm">
+<div ng-show="progressbar">
+
+    انتظر قليلا .......
+
+    <div class="progress progress-striped active">
+        <div class="progress-bar" ng-style="{'width': progresswidth +'%'}"></div>
+    </div>
+</div>
+<div class="well bs-component">
+
+  
 
         <fieldset>
             <legend>
@@ -26,7 +36,7 @@
             </div>
             <div class="input-group-btn">
                 <div class="col-lg-pull-4">
-                    <button ng-click = "uploadFile()" class="btn btn-success">
+                    <button ng-click = "uploadData();" class="btn btn-success">
                         <i class="fa fa-upload"></i>
                         رفع الملفات
 
@@ -36,5 +46,5 @@
 
             </div>
         </fieldset>
-    </form>
+
 </div>

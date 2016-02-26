@@ -169,12 +169,14 @@
     <Content Include="Scripts\app\controllers\HomeController.js" />
     <Content Include="Scripts\app\controllers\mymodalController.js" />
     <Content Include="Scripts\app\controllers\PositionController.js" />
+    <Content Include="Scripts\app\controllers\UploadController.js" />
     <Content Include="Scripts\app\directives\CommonDirective.js" />
     <Content Include="Scripts\app\directives\EmployeeDirective.js" />
     <Content Include="Scripts\app\services\DepartmentService.js" />
     <Content Include="Scripts\app\services\EmployeeService.js" />
     <Content Include="Scripts\app\services\HomeService.js" />
     <Content Include="Scripts\app\services\PositionService.js" />
+    <Content Include="Scripts\app\services\UploadService.js" />
     <Content Include="Scripts\bootstrap\bootstrap-rtl.js" />
     <Content Include="Scripts\bootstrap\bootstrap-rtl.min.js" />
     <Content Include="Scripts\bootstrap\jquery-1.9.1.js" />

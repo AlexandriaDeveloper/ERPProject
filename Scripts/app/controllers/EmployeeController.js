@@ -17,7 +17,7 @@
     AddEmployeeController.$inject = ['$location', '$scope', 'Employee', 'Departments', 'Position', '$timeout'];
     EditEmployeeController.$inject = ['$location', '$scope', 'Employee', 'Departments', 'Position', '$timeout', '$routeParams'];
     DeleteEmployeeController.$inject = ['$location', '$scope', 'Employee', 'Departments', 'Position', '$timeout', '$routeParams'];
-    UploadEmployeeController.inject = ['$scope', '$http', '$timeout'];
+    UploadEmployeeController.inject = ['$scope', 'fileUpload'];
       
 
 
@@ -191,46 +191,54 @@
 
     }
 
-    function UploadEmployeeController($scope, $http, $timeout) {
+    function UploadEmployeeController($scope, fileUpload) {
+        console.log("Upload fle");
+        $scope.uploadFile = function() {
+            var file = $scope.myFile;
 
-       
-        
-        //$scope.upload = [];
-        //$scope.UploadedFiles = [];
+            console.log('file is ');
+            console.dir(file);
 
-        //$scope.startUploading = function ($files) {
-        //    //$files: an array of files selected
-        //    for (var i = 0; i < $files.length; i++) {
-        //        var $file = $files[i];
-        //        (function (index) {
-        //            $scope.upload[index] = FileUploader.upload({
-        //                url: "./api/fileupload", // webapi url
-        //                method: "POST",
-        //                file: $file
-        //            }).progress(function (evt) {
-        //            }).success(function (data, status, headers, config) {
-        //                // file is uploaded successfully
-        //                $scope.UploadedFiles.push({ FileName: data.FileName, FilePath: data.LocalFilePath, FileLength: data.FileLength });
-        //            }).error(function (data, status, headers, config) {
-        //                console.log(data);
-        //            });
-        //        })(i);
-        //    }
-        //}
+            var uploadUrl = "api/FileUpload/GetFormData";
+            fileUpload.uploadFileToUrl(file, uploadUrl);
 
-        //$scope.uploadFile = function() {
-        //    var file = $scope.myFile;
+            //$scope.upload = [];
+            //$scope.UploadedFiles = [];
 
-        //    console.log('file is ');
-        //    console.dir(file);
+            //$scope.startUploading = function ($files) {
+            //    //$files: an array of files selected
+            //    for (var i = 0; i < $files.length; i++) {
+            //        var $file = $files[i];
+            //        (function (index) {
+            //            $scope.upload[index] = FileUploader.upload({
+            //                url: "./api/fileupload", // webapi url
+            //                method: "POST",
+            //                file: $file
+            //            }).progress(function (evt) {
+            //            }).success(function (data, status, headers, config) {
+            //                // file is uploaded successfully
+            //                $scope.UploadedFiles.push({ FileName: data.FileName, FilePath: data.LocalFilePath, FileLength: data.FileLength });
+            //            }).error(function (data, status, headers, config) {
+            //                console.log(data);
+            //            });
+            //        })(i);
+            //    }
+            //}
 
-        //    var uploadUrl = "/Uploads";
-        //    fileUpload.uploadFileToUrl(file, uploadUrl);
-        //};
+            //$scope.uploadFile = function() {
+            //    var file = $scope.myFile;
 
+            //    console.log('file is ');
+            //    console.dir(file);
+
+            //    var uploadUrl = "/Uploads";
+            //    fileUpload.uploadFileToUrl(file, uploadUrl);
+            //};
+
+
+        }
 
     }
-
 
     function _displayServerValidationError($scope, error) {
 
