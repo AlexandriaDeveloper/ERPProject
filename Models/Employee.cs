@@ -33,5 +33,12 @@ namespace ERPProject.Models
 
         public Department Department { get; set; }
         public Position Position { get; set; }
+
+        public virtual ICollection<DailyFileDetailsEmployee> DailyFileDetailsEmployee { get; set; }
+
+        public Employee()
+        {
+            DailyFileDetailsEmployee = new List<DailyFileDetailsEmployee>();
+        }
     }
 }

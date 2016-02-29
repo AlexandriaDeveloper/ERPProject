@@ -1,0 +1,53 @@
+﻿
+<a ng-href="/daily/add" class="btn btn-success">
+    فتح يومية جديدة
+    <i class="fa fa-bookmark"></i>
+</a>
+
+
+<table class="table table-hover table-striped">
+    <thead>
+    <tr>
+
+        <th></th>
+        <th>تاريخ الأنشاء</th>
+        <th>تاريخ اليومية</th>
+        <th>اليومية</th>
+        <th>رقم الشيك</th>
+        <th>باب الصرف</th>
+    </tr>
+    </thead>
+    <tbody>
+
+        <tr ng-repeat="daily in dailies">
+
+
+            <td class="col-sm-2">
+
+                <div class="input-group-btn">
+                    <a href="/daily/edit/{{daily.Id}}" class="btn btn-primary btn-xs">
+                        <i class="fa fa-edit"></i>
+                        تعديل
+                    </a>
+                    <a href="/daily/delete/{{daily.Id}}" class="btn btn-danger btn-xs">
+                        <i class="fa fa-remove"></i>
+                        حذف
+
+                    </a>
+
+
+
+                </div>
+            </td>
+            <td>{{daily.CreatedDate| date:' dd/MM/yyyy-h:mma'}}</td>
+            <td>{{daily.DailyDay |date:' dd/MM/yyyy'}}</td>
+            <td>{{daily.Name}}</td>
+            <td>{{daily.CheckGP}}</td>
+            <td>{{daily.ExpensessType.Name}}</td>
+        </tr>
+
+
+    </tbody>
+   
+
+</table>

@@ -34,14 +34,6 @@ namespace ERPProject.API
             _db = new ERPContext();
             _db.Configuration.ProxyCreationEnabled = false;
             var employees = _db.Employees.Include("Department").Include("Position").AsQueryable();
-
-
-
-
-
-
-
-
             return Ok(employees.OrderBy(x => x.Name));
         }
 

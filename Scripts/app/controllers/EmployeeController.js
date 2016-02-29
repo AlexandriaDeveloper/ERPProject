@@ -55,9 +55,9 @@
         $scope.codePredicate = "Code";
         $scope.positionPredicate = 'Position.Name';
         $scope.departmentPredicate = 'Department.Name';
+         $scope.sallaryPredicate = 'Sallary';
         $scope.modalshow = false;
-  
-
+       
     }
 
     //test

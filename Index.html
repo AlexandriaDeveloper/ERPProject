@@ -25,7 +25,7 @@
 
 
 </head>
-<body >
+<body>
     <div class="container">
         <!-- Navbar-->
         <nav class="navbar navbar-default">
@@ -85,9 +85,46 @@
                             </ul>
                         </li>
                     </ul>
-                 
+
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="#">Link</a></li>
+
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">موظفين <span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li>
+                                    <a href="/daily/index">
+                                        <i class="fa fa-book"></i>
+                                        انشاء يومية
+
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/employee/upload">
+                                        <i class="fa fa-newspaper-o"></i>
+                                        أنشاء ملف
+
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-archive"></i>
+                                        أرشيف يوميات
+
+                                    </a>
+                                </li>
+                                <li>
+
+                                    <a href="#">
+                                        <i class="fa fa-remove"></i>
+                                        حذف موظف
+
+
+
+                                    </a>
+
+                                </li>
+                            </ul>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -99,7 +136,7 @@
     </div>
 
 
-      
+
 
 
 
@@ -123,21 +160,28 @@
 
 
     <script src="Scripts/app/app.js"></script>
-
+    <script src="Scripts/app/routeconfig.js"></script>
 
     <script src="Scripts/app/controllers/DepartmentController.js"></script>
     <script src="Scripts/app/controllers/EmployeeController.js"></script>
     <script src="Scripts/app/controllers/HomeController.js"></script>
     <script src="Scripts/app/controllers/PositionController.js"></script>
-<script src="Scripts/app/controllers/UploadController.js"></script>
-
+    <script src="Scripts/app/controllers/UploadController.js"></script>
+    <script src="Scripts/app/controllers/DailyController.js"></script>
     <script src="Scripts/app/services/PositionService.js"></script>
     <script src="Scripts/app/services/HomeService.js"></script>
     <script src="Scripts/app/services/EmployeeService.js"></script>
     <script src="Scripts/app/services/DepartmentService.js"></script>
+    <script src="Scripts/app/services/DailyService.js"></script>
+    <script src="Scripts/app/services/ExpensessTypeService.js"></script>
+
+
     <script src="Scripts/app/services/UploadService.js"></script>
     <script src="Scripts/app/directives/EmployeeDirective.js"></script>
-<!-- custom Scripts-->
+
+    <script src="Scripts/app/directives/CommonDirective.js"></script>
+
+    <!-- custom Scripts-->
     <script src="Scripts/Script.js"></script>
 </body>
 </html>

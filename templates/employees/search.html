@@ -17,9 +17,9 @@
             <th class="col-sm-1">القسم</th>
             <th class="col-sm-2">الدرجة</th>
             <th class="col-sm-2">الرقم القومى</th>
-            <th class="col-sm-2">الكود</th>
+            <th class="col-sm-1">الكود</th>
 
-
+            <th class="col-sm-3">الدفع</th>
         </tr>
     </thead>
     <tbody class="example-animate-container">
@@ -60,18 +60,24 @@
             <td>
                 <div class="input-group-sm">
 
-                    <input type="text" class=" form-control input-sm" st-search="{{nationalIdPredicate}}"   placeholder="البحث بالرقم القومى">
+                    <input type="text" class=" form-control input-sm" st-search="{{nationalIdPredicate}}" placeholder="البحث بالرقم القومى">
 
                 </div>
             </td>
             <td>
                 <div class="input-group-sm">
 
-                    <input type="text" class=" form-control input-sm" st-search="{{codePredicate}}"   placeholder="الكود">
+                    <input type="text" class=" form-control input-sm" st-search="{{codePredicate}}" placeholder="الكود">
 
                 </div>
             </td>
+            <td>
+                <div class="input-group-sm">
 
+                    <input type="text" class=" form-control input-sm" st-search="{{sallaryPredicate}}" placeholder="الكود">
+
+                </div>
+            </td>
         </tr>
 
 
@@ -81,9 +87,7 @@
             <td class="col-sm-2">
 
                 <div class="input-group-btn">
-                    <a href="/employee/edit/{{row.Id}}" class="btn btn-primary btn-xs"
-                         
-                        >
+                    <a href="/employee/edit/{{row.Id}}" class="btn btn-primary btn-xs">
                         <i class="fa fa-edit"></i>
                         تعديل
                     </a>
@@ -97,13 +101,16 @@
 
                 </div>
             </td>
-            <td class="col-sm-3">{{row.Name}}</td>
+            <td class="col-sm-3">{{row.Name}}  </td>
             <td class="col-sm-2">{{row.Department.Name}}</td>
             <td class="col-sm-2">{{row.Position.Name}}</td>
             <td class="col-sm-2">{{row.NationalId}}</td>
 
-            <td class="col-sm-2">{{row.Code}}</td>
-
+            <td class="col-sm-1">{{row.Code}}</td>
+            <td class="col-sm-3">
+                {{row.Sallary?'كارت':'بنك'}}
+             <!--<input type="checkbox" ng-checked="row.Sallary" class="checkbox checkbox-inline"/>-->   
+            </td>
 
 
 
@@ -113,7 +120,7 @@
     <tfoot>
         <tr>
 
-            <td class="text-center" st-pagination=""  st-items-by-page="40"  st-displayed-pages="20" colspan="9"></
+            <td class="text-center" st-pagination="" st-items-by-page="40" st-displayed-pages="20" colspan="9"></
         </tr>
     </tfoot>
 </table>

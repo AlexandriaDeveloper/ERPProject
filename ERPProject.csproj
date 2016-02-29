@@ -164,6 +164,7 @@
     <Content Include="Scripts\angularjs\angular-route.min.js.map" />
     <None Include="Scripts\bootstrap\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\app\app.js" />
+    <Content Include="Scripts\app\controllers\DailyController.js" />
     <Content Include="Scripts\app\controllers\DepartmentController.js" />
     <Content Include="Scripts\app\controllers\EmployeeController.js" />
     <Content Include="Scripts\app\controllers\HomeController.js" />
@@ -172,8 +173,12 @@
     <Content Include="Scripts\app\controllers\UploadController.js" />
     <Content Include="Scripts\app\directives\CommonDirective.js" />
     <Content Include="Scripts\app\directives\EmployeeDirective.js" />
+    <Content Include="Scripts\app\routeconfig.js" />
+    <Content Include="Scripts\app\services\DailyService.js" />
     <Content Include="Scripts\app\services\DepartmentService.js" />
     <Content Include="Scripts\app\services\EmployeeService.js" />
+    <Content Include="Scripts\app\services\ExpensessTypeService.js" />
+    <Content Include="Scripts\app\services\factory.js" />
     <Content Include="Scripts\app\services\HomeService.js" />
     <Content Include="Scripts\app\services\PositionService.js" />
     <Content Include="Scripts\app\services\UploadService.js" />
@@ -186,6 +191,11 @@
     <Content Include="Scripts\smarttable\smart-table.min.js" />
     <Content Include="Scripts\tether\tether.js" />
     <Content Include="Scripts\tether\tether.min.js" />
+    <Content Include="templates\daily\add.html" />
+    <Content Include="templates\daily\delete.html" />
+    <Content Include="templates\daily\directives\dailyData.html" />
+    <Content Include="templates\daily\edit.html" />
+    <Content Include="templates\daily\index.html" />
     <Content Include="templates\employees\add.html" />
     <Content Include="templates\employees\delete.html" />
     <Content Include="templates\employees\directives\employeeData.html" />
@@ -197,8 +207,10 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="API\DailyController.cs" />
     <Compile Include="API\DepartmentsController.cs" />
     <Compile Include="API\EmployeeController.cs" />
+    <Compile Include="API\ExpensessTypeController.cs" />
     <Compile Include="API\FileUploadController.cs" />
     <Compile Include="API\PositionsController.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -233,10 +245,19 @@
     <Compile Include="Migrations\201602211850042_updateEmployeeTable.Designer.cs">
       <DependentUpon>201602211850042_updateEmployeeTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201602282218271_DailiesTables.cs" />
+    <Compile Include="Migrations\201602282218271_DailiesTables.Designer.cs">
+      <DependentUpon>201602282218271_DailiesTables.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Daily.cs" />
+    <Compile Include="Models\DailyFile.cs" />
+    <Compile Include="Models\DailyFileDetails.cs" />
+    <Compile Include="Models\DailyFileDetailsEmployee.cs" />
     <Compile Include="Models\Department.cs" />
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\ERPContext.cs" />
+    <Compile Include="Models\ExpensessType.cs" />
     <Compile Include="Models\FileUploadResult.cs" />
     <Compile Include="Models\Position.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -280,6 +301,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201602211850042_updateEmployeeTable.resx">
       <DependentUpon>201602211850042_updateEmployeeTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201602282218271_DailiesTables.resx">
+      <DependentUpon>201602282218271_DailiesTables.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
