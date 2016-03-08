@@ -1,7 +1,7 @@
-﻿(function() {
+﻿(function () {
 
     'use strict';
-  
+
     angular.module('app', [
         // Angular modules 
         'ngRoute',
@@ -14,13 +14,15 @@
         'PositionService',
       'DailyService',
       'ExpensessTypeService',
+      'DailyFileService',
+      'DailyArchiveService',
         //Custom Directive
 
         // 3rd Party Modules
         'smart-table',
         'ui.bootstrap'
     ]);
-     
-    
-        
+
+
+
 })();

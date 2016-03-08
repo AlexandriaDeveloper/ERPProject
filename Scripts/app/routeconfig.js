@@ -42,7 +42,7 @@
 
 
             /* Daily Route*/
-               .when('/daily/index',
+            .when('/daily/index',
             {
                 templateUrl: 'templates/daily/index.html',
                 controller: 'DailyController'
@@ -58,11 +58,35 @@
             {
                 templateUrl: 'templates/daily/delete.html',
                 controller: 'DeleteDailyController'
-            })
+            }).when('/daily/info/:Id',
+            {
+                templateUrl: 'templates/daily/info.html',
+                controller: 'InfoDailyController'
+            }).when('/daily/dailyfile/add/:Id',
+            {
+                templateUrl: 'templates/dailyfile/add.html',
+                controller: 'AddDailyFileController'
+            }).when('/daily/dailyfile/edit/:Id',
+            {
+                templateUrl: 'templates/dailyfile/details.html',
+                controller: 'DetailsDailyFileController'
+            }).when('/daily/dailyfile/delete/:Id',
+            {
+                templateUrl: 'templates/dailyfile/delete.html',
+                controller: 'DeleteDailyFileController'
+            }).when('/daily/daily/archive/',
+            {
+                templateUrl: 'templates/dailyarchive/index.html',
+                controller: 'DailyArchiveController'
+            }).when('/daily/archive/test/:Id',
+            {
+                templateUrl: 'templates/dailyarchive/test.html',
+                controller: 'TestArchiveController'
+            });
 
 
 
-            .otherwise('/');
+           
         $locationProvider.html5Mode(true);
     };
 

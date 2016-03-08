@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Core.Objects;
-using System.Data.OleDb;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -68,7 +67,7 @@ namespace ERPProject.API
                 {
                     long dataSourceId = 1;
                     var postedFile = httpRequest.Files[file];
-                     filePath = HttpContext.Current.Server.MapPath("~/Uploads/" + postedFile.FileName);
+                     filePath = HttpContext.Current.Server.MapPath("~/Uploads/SourceFile/" + postedFile.FileName);
                     //postedFile.SaveAs(filePath);
                     Stream stream = postedFile.InputStream;
                     byte[] fileData = null;
@@ -126,7 +125,12 @@ namespace ERPProject.API
             {
 
              Employee   emp = (from c in employees where (c.Code == Convert.ToInt32(row[4])) select (c)).FirstOrDefault();
-                     if (row[1].ToString() == "3-مرتب تحويلات بنكية")
+           
+                if (emp != null)
+
+                {
+
+                    if (row[1].ToString() == "3-مرتب تحويلات بنكية")
                     {
                         emp.Sallary = false;
                     }
@@ -135,13 +139,8 @@ namespace ERPProject.API
                         emp.Sallary = true;
                     }
 
-                if (emp != null)
 
-                {
-
-               
-
-                  //  emp.Other = row[1].ToString() != "3-مرتب تحويلات بنكية";
+                    //  emp.Other = row[1].ToString() != "3-مرتب تحويلات بنكية";
                     emp.Name = row[5].ToString();
                     emp.NationalId = row[0].ToString();
 
@@ -180,162 +179,4 @@ namespace ERPProject.API
 
 
     }
-
-
-
-    public class DAL
-    {
-        public OleDbConnection con { get; set; }
-
-        public DAL(string con)
-        {
-            //initilize new DbConnection depending on Con strin
-            this.con = new OleDbConnection(con);
-
-        }
-    }
-
-    public class BL : DAL
-    {
-        private DataTable dt;
-        private OleDbCommand cmd;
-
-        /// <summary>
-        /// construct new DbConnection 
-        /// initilize table container - Command- link command with initilized Connection
-        /// </summary>
-        /// <param name="con"></param>
-        public BL(string con)
-            : base(con)
-        {
-            dt = new DataTable();
-            cmd = new OleDbCommand();
-            cmd.Connection = this.con;
-        }
-        /// <summary>
-        /// this method used for geting List of All Sheets
-        /// </summary>
-        /// <returns></returns>
-        public string[] WorkbookSheets()
-        {
-            //clear Table
-            dt.Clear();
-
-            try
-            {
-                using (con)
-                {
-                    //check Connection
-                    if (con.State == ConnectionState.Closed)
-                    {
-                        con.Open();
-
-                    }
-                    //get Schema
-                    dt = con.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, null);
-                    var excelSheets = new String[dt.Rows.Count];
-                    var i = 0;
-
-                    // Add the sheet name to the string array.
-                    foreach (DataRow row in dt.Rows)
-                    {
-                        excelSheets[i] = row["TABLE_NAME"].ToString();
-                        i++;
-                    }
-                    return excelSheets;
-                }
-            }
-            catch (Exception ex)
-            {
-
-                // MessageBox.Show(ex.Message);
-                return null;
-            }
-
-
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="text"></param>
-        /// <returns></returns>
-        public DataTable GetTable(string text)
-        {
-            //clear table 
-            dt.Clear();
-
-            using (cmd = con.CreateCommand())
-            {
-                cmd.CommandText = text;
-                if (con.State == ConnectionState.Closed)
-                {
-                    con.Open();
-                }
-                //fill Table 
-
-                try
-                {
-                    OleDbDataAdapter adb = new OleDbDataAdapter();
-                    adb.SelectCommand = cmd;
-                    adb.Fill(dt);
-                }
-                catch (Exception ex)
-                {
-
-                    //   MessageBox.Show(ex.Message.ToString());
-                }
-
-                finally
-                {
-                    con.Close();
-                }
-
-
-            }
-            //return Table
-            return dt;
-        }
-        /// <summary>
-        /// This Method Used For 
-        /// Insert New Value or Row
-        /// </summary>
-        /// <param name="text"></param>
-        public void Insert(string text)
-        {
-
-            using (cmd = con.CreateCommand())
-            {
-                cmd.CommandText = text;
-
-                if (con.State == ConnectionState.Closed)
-                {
-                    con.Open();
-                }
-
-
-                OleDbDataAdapter adb = new OleDbDataAdapter();
-                adb.InsertCommand = cmd;
-                try
-                {
-                    adb.InsertCommand.ExecuteNonQuery();
-
-                }
-                catch (Exception ex)
-                {
-
-                    // MessageBox.Show(ex.Message);
-                }
-                finally
-                {
-                    con.Close();
-                }
-
-            }
-
-        }
-
-
-
-        }
-
-    }
+}

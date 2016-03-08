@@ -16,7 +16,7 @@
             console.log($scope.myFile);
       
             var file = $scope.myFile;
-            var file2 = $scope.myFile2;
+         //   var file2 = $scope.myFile2;
            
          
 

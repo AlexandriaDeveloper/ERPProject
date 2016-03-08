@@ -164,7 +164,9 @@
     <Content Include="Scripts\angularjs\angular-route.min.js.map" />
     <None Include="Scripts\bootstrap\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\app\app.js" />
+    <Content Include="Scripts\app\controllers\DailyArchiveController.js" />
     <Content Include="Scripts\app\controllers\DailyController.js" />
+    <Content Include="Scripts\app\controllers\DailyFileController.js" />
     <Content Include="Scripts\app\controllers\DepartmentController.js" />
     <Content Include="Scripts\app\controllers\EmployeeController.js" />
     <Content Include="Scripts\app\controllers\HomeController.js" />
@@ -174,6 +176,8 @@
     <Content Include="Scripts\app\directives\CommonDirective.js" />
     <Content Include="Scripts\app\directives\EmployeeDirective.js" />
     <Content Include="Scripts\app\routeconfig.js" />
+    <Content Include="Scripts\app\services\DailyArchiveService.js" />
+    <Content Include="Scripts\app\services\DailyFileService.js" />
     <Content Include="Scripts\app\services\DailyService.js" />
     <Content Include="Scripts\app\services\DepartmentService.js" />
     <Content Include="Scripts\app\services\EmployeeService.js" />
@@ -191,23 +195,36 @@
     <Content Include="Scripts\smarttable\smart-table.min.js" />
     <Content Include="Scripts\tether\tether.js" />
     <Content Include="Scripts\tether\tether.min.js" />
+    <Content Include="templates\dailyarchive\index.html" />
+    <Content Include="templates\dailyarchive\test.html" />
+    <Content Include="templates\dailyfile\delete.html" />
+    <Content Include="templates\dailyfile\details.html" />
+    <Content Include="templates\dailyfile\directives\dailyFileData.html" />
+    <Content Include="templates\dailyfile\edit.html" />
     <Content Include="templates\daily\add.html" />
     <Content Include="templates\daily\delete.html" />
     <Content Include="templates\daily\directives\dailyData.html" />
     <Content Include="templates\daily\edit.html" />
     <Content Include="templates\daily\index.html" />
+    <Content Include="templates\daily\info.html" />
     <Content Include="templates\employees\add.html" />
     <Content Include="templates\employees\delete.html" />
     <Content Include="templates\employees\directives\employeeData.html" />
     <Content Include="templates\employees\edit.html" />
     <Content Include="templates\employees\employeeUpload.html" />
     <Content Include="templates\employees\search.html" />
+    <Content Include="templates\dailyfile\add.html" />
     <Content Include="templates\helper\modal.html" />
     <Content Include="templates\home.html" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="API\BL.cs" />
+    <Compile Include="API\CustomMultipartFormDataStreamProvider.cs" />
+    <Compile Include="API\DailyArchiveController.cs" />
     <Compile Include="API\DailyController.cs" />
+    <Compile Include="API\DailyFilesController.cs" />
+    <Compile Include="API\DAL.cs" />
     <Compile Include="API\DepartmentsController.cs" />
     <Compile Include="API\EmployeeController.cs" />
     <Compile Include="API\ExpensessTypeController.cs" />
@@ -249,11 +266,14 @@
     <Compile Include="Migrations\201602282218271_DailiesTables.Designer.cs">
       <DependentUpon>201602282218271_DailiesTables.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201603070849132_dailyfiledetails.cs" />
+    <Compile Include="Migrations\201603070849132_dailyfiledetails.Designer.cs">
+      <DependentUpon>201603070849132_dailyfiledetails.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Daily.cs" />
     <Compile Include="Models\DailyFile.cs" />
     <Compile Include="Models\DailyFileDetails.cs" />
-    <Compile Include="Models\DailyFileDetailsEmployee.cs" />
     <Compile Include="Models\Department.cs" />
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\ERPContext.cs" />
@@ -279,7 +299,8 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Controllers\" />
-    <Folder Include="Uploads\" />
+    <Folder Include="Uploads\DailyFiles\" />
+    <Folder Include="Uploads\SourceFile\" />
     <Folder Include="Views\FileUpload\" />
     <Folder Include="Views\Home\" />
   </ItemGroup>
@@ -304,6 +325,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201602282218271_DailiesTables.resx">
       <DependentUpon>201602282218271_DailiesTables.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603070849132_dailyfiledetails.resx">
+      <DependentUpon>201603070849132_dailyfiledetails.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

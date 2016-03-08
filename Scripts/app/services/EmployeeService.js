@@ -12,6 +12,7 @@
                     isArray: true
                 },
                 get: {
+                    'url': '/api/Employee/Get/:Id',
                     'method': 'GET',
                     'params': { Id: '@Id' },
                     isArray: false

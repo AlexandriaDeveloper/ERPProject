@@ -66,22 +66,10 @@ namespace ERPProject.Models
 
 
             //many Employees Many DailyFileDetails
-            modelBuilder.Entity<DailyFileDetailsEmployee>()
-                .HasRequired(x => x.Employee)
-                .WithMany(t => t.DailyFileDetailsEmployee)
+            modelBuilder.Entity<Employee>()
+                .HasMany(x => x.DailyFileDetails)
+                .WithRequired(x => x.Employee)
                 .HasForeignKey(x => x.EmployeeId);
-
-            modelBuilder.Entity<DailyFileDetailsEmployee>()
-                .HasRequired(x => x.DailyFileDetails)
-                .WithMany(x => x.DailyFileDetailsEmployee)
-                .HasForeignKey(x => x.DailyFileId);
-
-
-            modelBuilder.Entity<DailyFileDetailsEmployee>().HasKey(x => new
-            {
-                x.EmployeeId,
-                x.DailyFileId
-            });
         }
     }
 }

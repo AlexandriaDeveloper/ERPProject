@@ -199,7 +199,7 @@
             console.log('file is ');
             console.dir(file);
 
-            var uploadUrl = "api/FileUpload/GetFormData";
+            var uploadUrl = "api/FileUpload/PostFormData";
             fileUpload.uploadFileToUrl(file, uploadUrl);
 
             //$scope.upload = [];

@@ -1,0 +1,79 @@
+﻿<div class="panel panel-default">
+    <div class="panel-heading">بيانات اليومية</div>
+    <div class="panel-body ">
+        <div class="container">
+            <div class="row">
+
+
+
+                <div class="col-sm-4">
+                    اجمالى مبلغ اليومية {{total}}
+
+                </div>
+                <div class="col-sm-4">
+                    عدد المستفيدين {{number}}
+
+                </div>
+                <div class="col-sm-4">
+                    عدد الملفات باليومية {{selectedDaily.length}}
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<a href="/daily/dailyfile/add/{{routeId}}" class="btn btn-success" ng-show="state.result.Open">
+    أنشاء ملف جديد
+    <i class=" fa fa-file-excel-o"></i>
+
+</a>
+<table class="table table-striped table-hover">
+    <thead>
+        <tr>
+            <th class="col-sm-2">
+
+
+            </th>
+            <th class="col-sm-5">
+                بيان
+
+            </th>
+            <th class="col-sm-3">
+                عدد المستحقين
+            </th>
+            <th class="col-sm-3">
+                المبلغ
+            </th>
+
+
+        </tr>
+
+    </thead>
+    <tbody>
+        <tr ng-repeat="daily in selectedDaily">
+
+            <td>
+                <div class="input-group-btn">
+                    <a href="/daily/dailyfile/edit/{{daily.Id}}" class="btn btn-primary btn-xs">
+
+                        تفاصيل
+                        <i class="fa fa-info"></i>
+                    </a>
+                    <a href="/daily/dailyfile/delete/{{daily.Id}}" class="btn btn-danger btn-xs" ng-show="state.result.Open">
+                        حذف
+                        <i class="fa fa-remove"></i>
+                    </a>
+                </div>
+
+            </td>
+            <td>{{daily.Name}}</td>
+            <td>{{daily.EmployeesNumber}}</td>
+            <td>{{daily.FileTotalAmount}}</td>
+
+        </tr>
+
+    </tbody>
+
+
+
+</table>

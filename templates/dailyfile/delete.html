@@ -1,0 +1,17 @@
+﻿<div class="alert alert-dismissible alert-danger">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <strong>أحترس </strong>
+
+    سوف تقوم بحذف
+    <a href="/dailyfile/edit/{{selectedDailyFile.Id}}" class="alert-link">{{selectedDailyFile.Name}}</a>
+    هل انت متأكد ؟!!!
+
+</div>
+
+
+
+
+<button ng-click="deleteItem();" class="btn btn-danger">حذف</button>
+<a href="/dailyfile/edit/{{selectedDailyFile.Id}}" class="btn btn-primary">تعديل</a>
+
+<a href="/dailyfile/index" class="btn btn-info">العودة</a>
