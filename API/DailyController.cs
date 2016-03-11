@@ -56,6 +56,34 @@ namespace ERPProject.API
                  totalamount=totalamount
             });
         }
+
+        public IHttpActionResult GetClosed(int Id)
+        {
+            _db = new ERPContext();
+            _db.Configuration.ProxyCreationEnabled = false;
+            var result = _db.Dailies
+                .Include("ExpensessType")
+                .Include("DailyFiles")
+                .Where(x => x.Open==false)
+                .FirstOrDefault(x => x.Id == Id);
+
+
+            List<DailyFile> resultfiles = _db.DailyFiles
+                .Where(x => x.DailyId == Id).ToList();
+            decimal totalamount = 0;
+
+            //foreach (DailyFile data in resultfiles)
+            //{
+            //   totalamount = data.DailyFileDetailses.Where(x => x.DailyFileId == data.Id).Sum(x => x.Net);
+            //}
+
+
+            return Ok(new
+            {
+                result = result,
+                totalamount = totalamount
+            });
+        }
         public IHttpActionResult GetParent(int Id)
         {
             _db = new ERPContext();

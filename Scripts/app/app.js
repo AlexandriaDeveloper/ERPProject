@@ -6,6 +6,7 @@
         // Angular modules 
         'ngRoute',
         'ngAnimate',
+    
         'ui.bootstrap',
         // Custom modules 
         'HomeService',

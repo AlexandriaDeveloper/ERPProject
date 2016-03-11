@@ -17,6 +17,12 @@
                     'params': { Id: '@Id' },
                     isArray: false
                 },
+                getclosed: {
+                    'url': '/api/Daily/GetClosed/:Id',
+                    'method': 'GET',
+                    'params': { Id: '@Id' },
+                    isArray: false
+                },
                 save: {
                     'url': '/api/Daily/Post/:model',
                     'method': 'Post',

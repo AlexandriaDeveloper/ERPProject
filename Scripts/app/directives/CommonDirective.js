@@ -35,5 +35,25 @@
                 };
             }
         };
-    })
+    }).directive('fileDownload', function ($compile) {
+        var fd = {
+            restrict: 'A',
+            link: function (scope, iElement, iAttrs) {
+
+                scope.$on("downloadFile", function (e, url) {
+                    var iFrame = iElement.find("iframe");
+                    if (!(iFrame && iFrame.length > 0)) {
+                        iFrame = $("<iframe style='position:fixed;display:none;top:-1px;left:-1px;'/>");
+                        iElement.append(iFrame);
+                    }
+
+                    iFrame.attr("src", url);
+
+
+                });
+            }
+        };
+
+        return fd;
+    });
 ;

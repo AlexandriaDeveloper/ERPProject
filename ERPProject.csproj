@@ -56,6 +56,11 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\..\Ashraf\Ashraf\bin\Debug\Microsoft.Office.Interop.Excel.dll</HintPath>
+    </Reference>
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -175,6 +180,7 @@
     <Content Include="Scripts\app\controllers\UploadController.js" />
     <Content Include="Scripts\app\directives\CommonDirective.js" />
     <Content Include="Scripts\app\directives\EmployeeDirective.js" />
+    <Content Include="Scripts\app\filters\commonfilters.js" />
     <Content Include="Scripts\app\routeconfig.js" />
     <Content Include="Scripts\app\services\DailyArchiveService.js" />
     <Content Include="Scripts\app\services\DailyFileService.js" />
@@ -195,6 +201,7 @@
     <Content Include="Scripts\smarttable\smart-table.min.js" />
     <Content Include="Scripts\tether\tether.js" />
     <Content Include="Scripts\tether\tether.min.js" />
+    <Content Include="templates\dailyarchive\checkinfo.html" />
     <Content Include="templates\dailyarchive\index.html" />
     <Content Include="templates\dailyarchive\test.html" />
     <Content Include="templates\dailyfile\delete.html" />

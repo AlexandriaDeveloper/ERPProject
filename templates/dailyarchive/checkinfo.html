@@ -14,7 +14,7 @@
 
     <div class="panel-body">
 
-        <form novalidate ng-submit="addDaily(selectedDaily)" class="form-horizontal" name="addDailyForm">
+        <form novalidate ng-submit="addDailyInfo(selectedDaily)" class="form-horizontal" name="addDailyForm">
             <fieldset>
 
                 <div class="form-group">
@@ -23,9 +23,9 @@
                         <input type="text"
                                class="form-control"
                                id="inputname"
-                               placeholder="عنوان اليومية"
-                               ng-model="selectedDaily.Name"
-                                ng-disabled="edit">
+                               placeholder="بيان اليومية"
+                               ng-disabled="true"
+                               ng-model="selectedDaily.Name">
                     </div>
                     <label for="inputname"
                            class="col-lg-2 control-label">
@@ -40,7 +40,7 @@
                                id="inputCheckGP"
                                placeholder="رقم الشيك"
                                ng-model="selectedDaily.CheckGP"
-                             
+                                 ng-disabled="edit"
                                name="CheckGP">
 
                     </div>
@@ -61,36 +61,35 @@
 
                     </div>
 
-                    <label for="inputCheckGP" 
+                    <label for="inputCheckGP"
                            ٍclass="col-lg-2 control-label">
-                       تاريخ اليومية
+                        تاريخ اليومية
 
                     </label>
 
                 </div>
-               
+
                 <div class="form-group">
                     <div class="col-lg-10">
                         <select ng-model="selectedDaily.ExpensessTypeId"
-                                ng-options="Expensess.value as Expensess.label 
+                                ng-options="Expensess.value as Expensess.label
                                 for
                                  Expensess in ExpensessType"
-                                class="form-control" ng-change="GetValue(selectedDaily.ExpensessTypeId)"></select>
-
+                        ng-disabled="true"        class="form-control" ng-change="GetValue(selectedDaily.ExpensessTypeId)"></select>
+                        
                     </div>
                     <label class="col-lg-2 control-label">باب الصرفية </label>
 
                 </div>
 
-     
+
 
 
                 <div class="form-group">
                     <div class="col-lg-10 col-lg-offset-2">
                         <button type="submit" ng-click="" class="btn btn-primary" ng-disabled="addDailyForm.$invalid">{{title}}</button>
 
-                        <button 
-                                ng-click="closeDaily(selectedDaily)"
+                        <button ng-click="closeDaily(selectedDaily)"
                                 class="btn btn-danger"
                                 ng-show="edit"
                                 ng-disabled="addDailyForm.$invalid">

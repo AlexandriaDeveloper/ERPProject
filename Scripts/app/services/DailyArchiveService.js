@@ -35,7 +35,12 @@
                 ExportExcel: {
                     url: '/api/DailyArchive/ExportExcel/:Id',
                     method: 'Get',                  
-                    params: { Id: '@Id' }
+                    params: { Id: '@Id' },
+                    data: 'json', //this is your json data string
+                    headers: {
+                        'Content-type': 'application/json'
+                    }
+               //     responseType: 'arraybuffer'
                 },
                 save: {
                     url: '/api/DailyArchive/PostDailyFile/:dailyFile',

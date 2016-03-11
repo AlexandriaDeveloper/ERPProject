@@ -12,7 +12,7 @@
 
 
     AddDailyFileController.$inject = ['$location', '$scope', '$routeParams', 'DailyFile', 'fileUpload'];
-    DetailsDailyFileController.$inject = ['$location', '$scope', '$routeParams', 'DailyFile', 'fileUpload'];
+    DetailsDailyFileController.$inject = ['$location', '$scope', '$routeParams', 'DailyFile'];
     DeleteDailyFileController.$inject = ['$location', '$scope', '$routeParams', 'DailyFile'];
     function AddDailyFileController($location, $scope, $routeParams, DailyFile, fileUpload) {
         /* jshint validthis:true */
@@ -45,37 +45,27 @@
 
     }
 
-    function DetailsDailyFileController($location, $scope, $routeParams, DailyFile, fileUpload) {
+    function DetailsDailyFileController($location, $scope, $routeParams, DailyFile) {
         /* jshint validthis:true */
         $scope.title = "تعديل ملف ";
+
+ 
         $scope.fileInfo = DailyFile.get({ Id: $routeParams.Id });
-        console.log($scope.fileInfo);
+        $scope.rowCollection = [];
+        $scope.fileInfo.$promise.then(function(data) {
+            console.log(data.DailyFileDetailses);
+       //   $scope.rowCollection = data.DailyFileDetailses;
 
-        $scope.myFilter = function (item) {
-          //  return item === $scope.fileInfo.;
-        };
+            angular.forEach(data, function (v, k) {
+                $scope.rowCollection = data.DailyFileDetailses;
 
+            });
+        });
+        $scope.namePredicate = 'Employee.Name';
+        $scope.nationalIdPredicate = "Employee.NationalId";
+        $scope.codePredicate = "Employee.Code";
+        $scope.positionPredicate = 'Net';
 
-
-        //$scope.addDailyfile = function (fileinf) {
-        //    var file = $scope.myFile;
-        
-        //   // var uploadUrl = '/api/DailyFiles/PostFormData';
-        //   //fileUpload.uploadFileToUrl(file, uploadUrl);
-        //    console.log(file);
-        //    console.log($scope.fileInfo);
-        //  //  $scope.fileInfo.DailyId = $routeParams.Id;
-        //    //$scope.fileInfo.$save(fileinf, function () {
-        //    //    $location.url('/daily/info/' + $routeParams.Id);
-        //    //});
-
-        //    DailyFile.update(fileinf, function() {
-                
-        //        $location.url('/daily/info/' + fileinf.DailyId);
-        //    });
-
-
-        //};
     }
 
     function DeleteDailyFileController($location, $scope, $routeParams, DailyFile) {

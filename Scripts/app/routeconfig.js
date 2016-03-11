@@ -82,6 +82,10 @@
             {
                 templateUrl: 'templates/dailyarchive/test.html',
                 controller: 'TestArchiveController'
+            }).when('/daily/archive/checkinfo/:Id',
+            {
+                templateUrl: 'templates/dailyarchive/checkinfo.html',
+                controller: 'CheckinfoArchiveController'
             });
 
 
