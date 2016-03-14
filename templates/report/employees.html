@@ -1,0 +1,92 @@
+﻿<div class="well">
+    <form novalidate ng-submit="getEmpData(emp)" class="form-horizontal">
+        <fieldset>
+            <legend>
+                <i class="fa fa-search-minus"></i>
+
+                البحث
+
+            </legend>
+            <div class="form-group">
+
+                <div class="col-lg-6">
+                    <input type="text" class="form-control" id="inputEmail" placeholder="الرقم القومى ......" ng-model="emp.NationalId">
+                </div>
+                <label for="inputEmail" class="col-lg-2 control-label">الرقم القومى</label>
+
+                <div class="col-lg-3">
+                    <input type="text" class="form-control" id="inputEmail" placeholder="الكود ......." ng-model="emp.Code">
+                </div>
+                <label for="inputEmail" class="col-lg-1 control-label">الكود</label>
+            </div>
+
+
+
+            <button type="submit" class="btn btn-primary center-block">
+                <i class="fa fa-search"></i>
+                بحث
+
+
+            </button>
+        </fieldset>
+    </form>
+</div>
+<div class="panel panel-default" ng-show="empinfo.Name.length>0">
+    <div class="panel-heading">بيانات صرفيات  : {{empinfo.Name}}</div>
+    <div class="panel-body">
+        <div class="row">
+
+
+            <div class="col-sm-4">
+
+              عدد العمليات المنصرفة و تحت التجهيز : {{empinfo.DailyFileDetails.length}}
+            </div>
+            <div class="col-sm-4">
+
+                الرقم القومى : {{empinfo.NationalId}}
+            </div>
+            <div class="col-lg-4">
+                الأسم :{{empinfo.Name}}
+
+            </div>
+        </div>
+        <table class="table table-hover table-striped">
+            <thead>
+                <tr>
+                    <td>
+                        بيان
+                    </td>
+                    <td>
+                        المبلغ
+                    </td>
+                    <td>
+                        تاريخ أغلاق اليومية
+
+                    </td>
+                    <td></td>
+                </tr>
+
+            </thead>
+            <tbody>
+                <tr ng-repeat="empinfo in empinfo.DailyFileDetails |orderBy:'-DailyFile.Daily.ClosedDate'" ng-hide="empinfo.DailyFile.Daily.Open">
+                    <td>
+                        {{empinfo.DailyFile.Name}}
+                    </td>
+                    <td>
+                        {{empinfo.Net}}
+                    </td>
+                    <td>
+                        {{empinfo.DailyFile.Daily.ClosedDate| date:'yyyy-MM-dd'}}
+                    </td>
+                    <td>
+                        <input type="checkbox" ng-disabled="true" ng-checked="empinfo.DailyFile.Daily.Open"/>
+
+                        {{empinfo.DailyFile.Daily.Open ?'الملف تحت التجهيز':'مغلق'}}
+
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+</div>

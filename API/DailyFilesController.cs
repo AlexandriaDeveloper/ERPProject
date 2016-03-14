@@ -30,8 +30,8 @@ namespace ERPProject.API
 
 
             var result = _db.DailyFiles.OrderByDescending(x => x.CreatedDate).Where(x => x.DailyId == Id).AsQueryable();
-          
-           
+
+
             return result;
         }
 
@@ -41,10 +41,10 @@ namespace ERPProject.API
         public IHttpActionResult GetDailyFile(int Id)
         {
             DailyFile dailyFile = _db.DailyFiles.Find(Id);
-            dailyFile.DailyFileDetailses= new List<DailyFileDetails>();
+            dailyFile.DailyFileDetailses = new List<DailyFileDetails>();
             dailyFile.DailyFileDetailses =
                 _db.DailyFileDetailses.Where(x => x.DailyFileId == Id).Include("Employee").ToList();
-       
+
             if (dailyFile == null)
             {
                 return NotFound();
@@ -102,11 +102,18 @@ namespace ERPProject.API
             {
                 try
                 {
-                    var root = HttpContext.Current.Server.MapPath("~/Uploads/DailyFiles/Daily-" + Id.ToString());
 
 
 
 
+
+
+                    // Get Destination Folder Path
+                    var root = HttpContext.Current.Server.MapPath("~/Uploads/DailyFiles/Daily-" + Id.ToString() + "/");
+
+
+
+                    //get provider 
                     CustomMultipartFormDataStreamProvider provider = new CustomMultipartFormDataStreamProvider(root);
 
                     List<string> files = new List<string>();
@@ -114,26 +121,67 @@ namespace ERPProject.API
                     try
                     {
                         await Request.Content.ReadAsMultipartAsync(provider);
+
+                        //Fetch Normal Data
                         var model = provider.FormData["model"];
+
+                        //Fetch Files Inside
                         foreach (MultipartFileData file in provider.FileData)
                         {
-
                             files.Add(Path.GetFileName(file.LocalFileName));
                         }
+
+
+
+
+                        //Desirilze Json Data Object 
                         var dailyFile = JsonConvert.DeserializeObject<DailyFile>(model);
 
-
+                        //Insert Creation Date
                         dailyFile.CreatedDate = DateTime.UtcNow;
+
                         if (!ModelState.IsValid)
                         {
                             return new HttpResponseMessage(HttpStatusCode.MethodNotAllowed);
                         }
-                        foreach (MultipartFileData file in provider.FileData)
+                        //Files Name Counter 
+                        int newname = 0;
+                        //Catch All Files Inside Source Folder
+                        string[] filesExist = Directory.GetFiles(root,"*.xls")
+                            .Select(path => Path.GetFileName(path))
+                                     .ToArray(); ;
+                        //Loop And Check The right File Name Can Be
+                        foreach (var filename in filesExist)
                         {
-                            dailyFile.FilePath = file.LocalFileName;
+                            int t=0;
+                            bool numericname = false;
+                            string namewithoutext = filename.Substring(0,filename.Length - 4);
+                            numericname = int.TryParse(namewithoutext,out t);
+                            if (numericname)
+                                newname++;
                         }
 
 
+                        foreach (MultipartFileData file in provider.FileData)
+                        {
+                            //get Original File Path 
+                            //   dailyFile.FilePath = file.LocalFileName;
+
+                            // Move file from Original File Path to new Place
+                            try
+                            {
+                                File.Move(file.LocalFileName, root + newname + ".xls");
+                            }
+                            catch (Exception ex )
+                            {
+
+                                return Request.CreateResponse(HttpStatusCode.ExpectationFailed, ex.Message);
+                            }
+                           
+
+                        }
+                     
+                        dailyFile.FilePath = root + newname + ".xls";
 
                         string con =
                (@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + dailyFile.FilePath + ";Extended Properties='Excel 12.0 Xml; HDR = YES; IMEX = 1';");
@@ -228,7 +276,7 @@ namespace ERPProject.API
         public IHttpActionResult DeleteDailyFile(int Id)
         {
             DailyFile dailyFile = _db.DailyFiles.Find(Id);
-            
+
             if (dailyFile == null)
             {
                 return NotFound();

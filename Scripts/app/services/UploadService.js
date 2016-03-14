@@ -9,18 +9,28 @@
        
             this.uploadFileToUrl = function (file, uploadUrl) {
                 var defferd = $q.defer();
-                var fd = new FormData();
-                fd.append('file', file);
-                $http.post(uploadUrl, fd, {
-
-                    transformRequest: angular.identity,
+           
+                $http({
+                    url:uploadUrl,
+                    method: 'Post',
+                    transformRequest: function(data) {
+                        var formData = new FormData();
+                        console.log(data);
+                        //need to convert our json object to a string version of json otherwise
+                        // the browser will do a 'toString()' on the object which will result 
+                        // in the value '[Object object]' on the server.
+                      
+                        formData.append("file", file);
+                        return formData;
+                    },
                     headers: { 'Content-Type': undefined }
                 })
                     .success(function (data) {
                         console.log(data);
                         defferd.resolve(data);
                     })
-                    .error(function () {
+                    .error(function (error) {
+                        console.log(error);
                         defferd.reject;
                     });
                 return defferd.promise;
@@ -62,9 +72,9 @@
                         defferd.resolve(data);
                     })
                     .error(function () {
-                        defferd.reject;
+                        defferd.reject();
                     });
-                return defferd.promise;
+                return defferd.promise();
             }
 
 

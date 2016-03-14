@@ -6,7 +6,7 @@
         // Angular modules 
         'ngRoute',
         'ngAnimate',
-    
+
         'ui.bootstrap',
         // Custom modules 
         'HomeService',
@@ -17,6 +17,8 @@
       'ExpensessTypeService',
       'DailyFileService',
       'DailyArchiveService',
+      'ReportService',
+
         //Custom Directive
 
         // 3rd Party Modules

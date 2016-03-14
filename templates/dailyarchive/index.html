@@ -31,11 +31,12 @@
     </thead>
     <tbody>
         <tr>
-            <td colspan="3"></td>
-            <td colspan="2">
+            <td colspan="2"></td>
+            <td colspan="3">
                 <div class="input-group-sm">
 
-                    <input type="text" class="form-control "
+                    <input type="text"
+                            class="form-control"
                            st-search="{{namePredicate}}"
                            placeholder="البحث بالأسم">
                 </div>
@@ -45,7 +46,8 @@
             <td colspan="1">
                 <div class="input-group-sm">
 
-                    <input type="text" class="form-control "
+                    <input type="text" 
+                           class="form-control"
                            st-search="{{expensessPredicate}}"
                            placeholder="البحث باب المصروفات">
                 </div>
@@ -65,7 +67,7 @@
         </tr>
 
     <tr ng-repeat="daily in displayed">
-        <td colspan="3">
+        <td colspan="2">
             <div class="input-group-btn btn-group-xs">
                 <a href="/daily/info/{{daily.Id}}" class="btn btn-primary">
                     تفاصيل
@@ -82,10 +84,10 @@
                 </a>
             </div>
         </td>
-        <td colspan="2">{{daily.Name}}</td>
+        <td colspan="3">{{daily.Name}}</td>
         <td colspan="1">{{daily.ExpensessType.Name}}</td>
-        <td colspan="2">{{daily.CreatedDate| date:'yyyy-MM-dd HH:mm '}}</td>
-        <td colspan="2">{{daily.ClosedDate| date:'yyyy-MM-dd HH:mm '}}</td>
+        <td colspan="2">{{daily.CreatedDate| date:'yyyy-MM-dd'}}</td>
+        <td colspan="2">{{daily.ClosedDate| date:'yyyy-MM-dd'}}</td>
         <td colspan="2">{{daily.CheckGP}}</td>
     </tr>
     </tbody>

@@ -177,6 +177,7 @@
     <Content Include="Scripts\app\controllers\HomeController.js" />
     <Content Include="Scripts\app\controllers\mymodalController.js" />
     <Content Include="Scripts\app\controllers\PositionController.js" />
+    <Content Include="Scripts\app\controllers\ReportController.js" />
     <Content Include="Scripts\app\controllers\UploadController.js" />
     <Content Include="Scripts\app\directives\CommonDirective.js" />
     <Content Include="Scripts\app\directives\EmployeeDirective.js" />
@@ -191,6 +192,7 @@
     <Content Include="Scripts\app\services\factory.js" />
     <Content Include="Scripts\app\services\HomeService.js" />
     <Content Include="Scripts\app\services\PositionService.js" />
+    <Content Include="Scripts\app\services\ReportService.js" />
     <Content Include="Scripts\app\services\UploadService.js" />
     <Content Include="Scripts\bootstrap\bootstrap-rtl.js" />
     <Content Include="Scripts\bootstrap\bootstrap-rtl.min.js" />
@@ -223,6 +225,7 @@
     <Content Include="templates\dailyfile\add.html" />
     <Content Include="templates\helper\modal.html" />
     <Content Include="templates\home.html" />
+    <Content Include="templates\report\employees.html" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -237,6 +240,7 @@
     <Compile Include="API\ExpensessTypeController.cs" />
     <Compile Include="API\FileUploadController.cs" />
     <Compile Include="API\PositionsController.cs" />
+    <Compile Include="API\ReportController.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="API\HomeController.cs" />

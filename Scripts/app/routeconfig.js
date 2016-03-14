@@ -86,6 +86,10 @@
             {
                 templateUrl: 'templates/dailyarchive/checkinfo.html',
                 controller: 'CheckinfoArchiveController'
+            }).when('/report/employee/details',
+            {
+                templateUrl: 'templates/report/employees.html',
+                controller: 'ReportController'
             });
 
 

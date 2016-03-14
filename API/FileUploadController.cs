@@ -61,112 +61,150 @@ namespace ERPProject.API
             var httpRequest = HttpContext.Current.Request;
             string path = "";
             string filePath = "";
-            if (httpRequest.Files.Count > 0)
+
+
+            try
             {
-                foreach (string file in httpRequest.Files)
+                if (httpRequest.Files.Count > 0)
                 {
-                    long dataSourceId = 1;
-                    var postedFile = httpRequest.Files[file];
-                     filePath = HttpContext.Current.Server.MapPath("~/Uploads/SourceFile/" + postedFile.FileName);
-                    //postedFile.SaveAs(filePath);
-                    Stream stream = postedFile.InputStream;
-                    byte[] fileData = null;
-                    using (var binaryReader = new BinaryReader(postedFile.InputStream))
+                    foreach (string file in httpRequest.Files)
                     {
-                        fileData = binaryReader.ReadBytes(postedFile.ContentLength);
+                        long dataSourceId = 1;
+                        var postedFile = httpRequest.Files[file];
+                        filePath = HttpContext.Current.Server.MapPath("~/Uploads/SourceFile/" + postedFile.FileName);
+                        //postedFile.SaveAs(filePath);
+                        Stream stream = postedFile.InputStream;
+                        byte[] fileData = null;
+                        using (var binaryReader = new BinaryReader(postedFile.InputStream))
+                        {
+                            fileData = binaryReader.ReadBytes(postedFile.ContentLength);
+                        }
+                        var strrr = new MemoryStream(fileData);
+
+
+
+                        //     var temp = @"c:\File"; // Get %TEMP% path
+
+
+                        var tempfile = Path.GetFileNameWithoutExtension(Path.GetRandomFileName()); // Get random file name without extension
+                                                                                                   //    var ext = Path.GetExtension(tempfile);
+                                                                                                   //   path = Path.Combine(temp, postedFile.FileName); // Get random file path
+
+                        using (var fs = new FileStream(filePath, FileMode.Create, FileAccess.Write))
+                        {
+                            // Write content of your memory stream into file stream
+                            strrr.WriteTo(fs);
+                        }
+
+                        // Create Excel app
+                        //   Excel.Application excel = new Excel.Application();
+
+                        // Open Workbook
+                        //  excel.Workbooks.Open(path, ReadOnly: true);
+
+                        // StreamWriter stw = new StreamWriter(strrr,Encoding.Unicode);
                     }
-                    var strrr = new MemoryStream(fileData);
 
 
 
-                    var temp = @"c:\File"; // Get %TEMP% path
-                   
 
-                    var tempfile = Path.GetFileNameWithoutExtension(Path.GetRandomFileName()); // Get random file name without extension
-                    var ext = Path.GetExtension(tempfile);
-                     path = Path.Combine(temp, postedFile.FileName); // Get random file path
 
-                    using (var fs = new FileStream(filePath, FileMode.Create, FileAccess.Write))
-                    {
-                        // Write content of your memory stream into file stream
-                       strrr.WriteTo(fs);
-                    }
 
-                    // Create Excel app
-                 //   Excel.Application excel = new Excel.Application();
-
-                    // Open Workbook
-                  //  excel.Workbooks.Open(path, ReadOnly: true);
-
-                   // StreamWriter stw = new StreamWriter(strrr,Encoding.Unicode);
                 }
 
 
+                string check = "ATM";
+                string con =
+                    (@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + filePath + ";Extended Properties='Excel 12.0 Xml; HDR = YES; IMEX = 1';");
+
+                //string con2 =
+                //      (@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=c:\File\Bank.xls;Extended Properties='Excel 12.0 Xml; HDR = YES; IMEX = 1';");
+
+                BL bl = new BL(con);
+
+                DataTable dtw = bl.GetTable("select * from [Sheet1$]");
+                _db = new ERPContext();
+                var employees = _db.Employees.ToList();
 
 
-
-
-            }
-
-
-
-            string con =
-                (@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source="+ filePath + ";Extended Properties='Excel 12.0 Xml; HDR = YES; IMEX = 1';");
-
-            //string con2 =
-            //      (@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=c:\File\Bank.xls;Extended Properties='Excel 12.0 Xml; HDR = YES; IMEX = 1';");
-
-            BL bl = new BL(con);
-
-            DataTable dtw = bl.GetTable("select * from [Sheet1$]");
-            _db = new ERPContext();
-            var employees = _db.Employees.ToList();
-            foreach (DataRow row in dtw.Rows)
-            {
-
-             Employee   emp = (from c in employees where (c.Code == Convert.ToInt32(row[4])) select (c)).FirstOrDefault();
-           
-                if (emp != null)
-
+               var payingType= dtw.Rows[1].ItemArray[1];
+                bool pay = true;
+                if (payingType.Equals("3-مرتب تحويلات بنكية"))
+                {
+                    check = "Bank";
+                    pay = false;
+                }
+                foreach (DataRow row in dtw.Rows)
                 {
 
-                    if (row[1].ToString() == "3-مرتب تحويلات بنكية")
+                 //   Employee emp = (from c in employees where (c.Code == Convert.ToInt32(row[4])) select (c)).FirstOrDefault();
+                    int code=0;
+                    bool codeparse = int.TryParse(row[4].ToString(), out code);
+
+                    Employee emp = null;
+                    if (codeparse)
+                    {  emp = _db.Employees.FirstOrDefault(x => x.Code == code);
+                    }
+                   
+                    if (emp != null)
+
                     {
-                        emp.Sallary = false;
+
+                        //if (row[1].ToString() == "3-مرتب تحويلات بنكية")
+                        //{
+                        //    emp.Sallary = false;
+                        //    check = "Bank";
+                        //}
+                        //else
+                        //{
+                        //    emp.Sallary = true;
+                        //    check = "ATM";
+                        //}
+
+
+                        //  emp.Other = row[1].ToString() != "3-مرتب تحويلات بنكية";
+                        emp.Sallary = pay;
+                        emp.Name = row[5].ToString();
+                        emp.NationalId = row[0].ToString();
+
                     }
                     else
                     {
-                        emp.Sallary = true;
+                        Employee empl = new Employee
+                        {
+                            NationalId = row[0].ToString(),
+                            Name = row[5].ToString(),
+                            Code = Convert.ToInt32(row[4]),
+                            Sallary = pay,
+                            Other = true
+                        };
+
+
+
+                        _db.Employees.Add(empl);
                     }
+                  
 
-
-                    //  emp.Other = row[1].ToString() != "3-مرتب تحويلات بنكية";
-                    emp.Name = row[5].ToString();
-                    emp.NationalId = row[0].ToString();
-
+                          
                 }
-                else
+               _db.SaveChanges();
+                _db.Dispose();
+                if (File.Exists(HttpContext.Current.Server.MapPath("~/Uploads/SourceFile/" + check + ".xls")))
                 {
-                    Employee empl = new Employee
-                    {
-                        NationalId = row[0].ToString(),
-                        Name = row[5].ToString(),
-                        Code = Convert.ToInt32(row[4]),
-                      
-                        Other = true
-                    };
-
-
-
-                    _db.Employees.Add(empl);
+                    File.Delete(HttpContext.Current.Server.MapPath("~/Uploads/SourceFile/" + check + ".xls"));
                 }
 
+                File.Move(filePath, HttpContext.Current.Server.MapPath("~/Uploads/SourceFile/" + check + ".xls"));
 
-                _db.SaveChanges();
+                return Ok(new { msg = "success" });
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(ex.Message);
             }
 
-
-            return Ok(new {msg="success"});
+           
         }
 
 
