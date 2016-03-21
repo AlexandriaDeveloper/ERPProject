@@ -22,11 +22,14 @@ namespace ERPProject.Models
         public ERPContext() : base("ERPDB")
         {
             Database.SetInitializer(new CreateDatabaseIfNotExists<ERPContext>());
+            this.Configuration.ProxyCreationEnabled = false;
         }
 
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+
+            
 
             //ONE Department Many Employees
             modelBuilder.Entity<Department>()

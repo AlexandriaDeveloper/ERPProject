@@ -33,6 +33,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <FilesToIncludeForPublish>AllFilesInProjectFolder</FilesToIncludeForPublish>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -167,6 +168,7 @@
     <Content Include="Scripts\angularjs\angular-animate.min.js.map" />
     <Content Include="Scripts\angularjs\angular-file-upload.js.map" />
     <Content Include="Scripts\angularjs\angular-route.min.js.map" />
+    <None Include="Properties\PublishProfiles\ERPProject.pubxml" />
     <None Include="Scripts\bootstrap\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\app\app.js" />
     <Content Include="Scripts\app\controllers\DailyArchiveController.js" />
@@ -210,6 +212,8 @@
     <Content Include="templates\dailyfile\details.html" />
     <Content Include="templates\dailyfile\directives\dailyFileData.html" />
     <Content Include="templates\dailyfile\edit.html" />
+    <Content Include="templates\dailyfile\employee\directives\employeeinfoData.html" />
+    <Content Include="templates\dailyfile\employee\edit.html" />
     <Content Include="templates\daily\add.html" />
     <Content Include="templates\daily\delete.html" />
     <Content Include="templates\daily\directives\dailyData.html" />
@@ -281,6 +285,10 @@
     <Compile Include="Migrations\201603070849132_dailyfiledetails.Designer.cs">
       <DependentUpon>201603070849132_dailyfiledetails.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201603212007479_UpdateDailyFileNumberToString.cs" />
+    <Compile Include="Migrations\201603212007479_UpdateDailyFileNumberToString.Designer.cs">
+      <DependentUpon>201603212007479_UpdateDailyFileNumberToString.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Daily.cs" />
     <Compile Include="Models\DailyFile.cs" />
@@ -339,6 +347,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201603070849132_dailyfiledetails.resx">
       <DependentUpon>201603070849132_dailyfiledetails.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603212007479_UpdateDailyFileNumberToString.resx">
+      <DependentUpon>201603212007479_UpdateDailyFileNumberToString.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -29,28 +29,6 @@ namespace ERPProject.API
 
         public IHttpActionResult GetFormData()
         {
-            //string con =
-            //  (@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=c:\File\Bank.xls;Extended Properties='Excel 12.0 Xml; HDR = YES; IMEX = 1';");
-
-
-
-            //BL bl = new BL(con);
-
-            //DataTable dtw = bl.GetTable("select * from [Sheet1$]");
-            //_db = new ERPContext();
-            //foreach (DataRow row in dtw.Rows)
-            //{
-            //    _db.Employees.Add(new Employee()
-            //    {
-            //        NationalId = row[0].ToString(),
-            //        Name = row[5].ToString(),
-            //        Code = (int)row[4]
-
-
-            //    });
-            //}
-            //_db.SaveChanges();
-
             return Ok();
         }
 
@@ -80,36 +58,14 @@ namespace ERPProject.API
                             fileData = binaryReader.ReadBytes(postedFile.ContentLength);
                         }
                         var strrr = new MemoryStream(fileData);
-
-
-
-                        //     var temp = @"c:\File"; // Get %TEMP% path
-
-
-                        var tempfile = Path.GetFileNameWithoutExtension(Path.GetRandomFileName()); // Get random file name without extension
-                                                                                                   //    var ext = Path.GetExtension(tempfile);
-                                                                                                   //   path = Path.Combine(temp, postedFile.FileName); // Get random file path
-
+                        var tempfile = Path.GetFileNameWithoutExtension(Path.GetRandomFileName());
+                        // Get random file name without 
                         using (var fs = new FileStream(filePath, FileMode.Create, FileAccess.Write))
                         {
                             // Write content of your memory stream into file stream
                             strrr.WriteTo(fs);
-                        }
-
-                        // Create Excel app
-                        //   Excel.Application excel = new Excel.Application();
-
-                        // Open Workbook
-                        //  excel.Workbooks.Open(path, ReadOnly: true);
-
-                        // StreamWriter stw = new StreamWriter(strrr,Encoding.Unicode);
+                        }                      
                     }
-
-
-
-
-
-
                 }
 
 
@@ -117,9 +73,7 @@ namespace ERPProject.API
                 string con =
                     (@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + filePath + ";Extended Properties='Excel 12.0 Xml; HDR = YES; IMEX = 1';");
 
-                //string con2 =
-                //      (@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=c:\File\Bank.xls;Extended Properties='Excel 12.0 Xml; HDR = YES; IMEX = 1';");
-
+          
                 BL bl = new BL(con);
 
                 DataTable dtw = bl.GetTable("select * from [Sheet1$]");
@@ -149,20 +103,6 @@ namespace ERPProject.API
                     if (emp != null)
 
                     {
-
-                        //if (row[1].ToString() == "3-مرتب تحويلات بنكية")
-                        //{
-                        //    emp.Sallary = false;
-                        //    check = "Bank";
-                        //}
-                        //else
-                        //{
-                        //    emp.Sallary = true;
-                        //    check = "ATM";
-                        //}
-
-
-                        //  emp.Other = row[1].ToString() != "3-مرتب تحويلات بنكية";
                         emp.Sallary = pay;
                         emp.Name = row[5].ToString();
                         emp.NationalId = row[0].ToString();
@@ -206,15 +146,6 @@ namespace ERPProject.API
 
            
         }
-
-
-        //public string DataTableToJSONWithJSONNet(DataTable table)
-        //{
-        //    string JSONString = string.Empty;
-        //    JSONString = JsonConvert.SerializeObject(table);
-        //    return JSONString;
-        //}
-
 
     }
 }

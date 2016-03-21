@@ -19,6 +19,13 @@
                     isArray: false
 
                 },
+                getEmployeeInfo: {
+                    url: '/api/DailyFiles/GetEmployeeInfo/:Id',
+                    method: 'GET',
+                    params: { Id: '@Id' },
+                    isArray: false
+
+                },
                 getParent: {
                     url: '/api/Daily/GetParent/:Id',
                     method: 'GET',
@@ -30,6 +37,16 @@
                     url: '/api/DailyFiles/PutDailyFile/:dailyFile',
                     method: 'POST',
                     params: { dailyFile: '@dailyFile' }
+
+
+                }, updateEmpInfo: {
+                    
+                    url: '/api/DailyFiles/UpdateEmpInfo/:EmpInfo',
+                    method: 'POST',
+                    params: { EmpInfo: '@EmpInfo' },
+                    function() {
+                        console.log('@EmpInfo');
+                    }
 
 
                 },

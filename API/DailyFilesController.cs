@@ -52,6 +52,30 @@ namespace ERPProject.API
 
             return Ok(dailyFile);
         }
+        [HttpGet]
+        public IHttpActionResult GetEmployeeInfo(int Id)
+        {
+            _db= new ERPContext();
+            var empInfo = _db.DailyFileDetailses.Include("Employee").FirstOrDefault(x=>x.Id== Id);
+            if (empInfo == null)
+            {
+            }
+            return Ok(empInfo);
+        }
+        [HttpPost]
+        public IHttpActionResult UpdateEmpInfo([FromBody] DailyFileDetails EmpInfo)
+        {
+
+            if (EmpInfo != null)
+            {
+                _db = new ERPContext();
+                var model = _db.DailyFileDetailses.Find(EmpInfo.Id);
+                model.Net = EmpInfo.Net;
+                _db.SaveChanges();
+
+            }
+            return Ok();
+        }
 
         // PUT: api/DailyFiles/5
         [ResponseType(typeof(void))]
@@ -102,12 +126,6 @@ namespace ERPProject.API
             {
                 try
                 {
-
-
-
-
-
-
                     // Get Destination Folder Path
                     var root = HttpContext.Current.Server.MapPath("~/Uploads/DailyFiles/Daily-" + Id.ToString() + "/");
 
@@ -146,6 +164,7 @@ namespace ERPProject.API
                         }
                         //Files Name Counter 
                         int newname = 0;
+                       
                         //Catch All Files Inside Source Folder
                         string[] filesExist = Directory.GetFiles(root,"*.xls")
                             .Select(path => Path.GetFileName(path))
@@ -153,12 +172,13 @@ namespace ERPProject.API
                         //Loop And Check The right File Name Can Be
                         foreach (var filename in filesExist)
                         {
-                            int t=0;
-                            bool numericname = false;
+                             int t = 0;
+                             
                             string namewithoutext = filename.Substring(0,filename.Length - 4);
-                            numericname = int.TryParse(namewithoutext,out t);
-                            if (numericname)
-                                newname++;
+                            bool numericname = int.TryParse(namewithoutext,out t);
+                            if(t>=newname&& numericname)
+                                
+                                newname= t+1;
                         }
 
 
@@ -196,22 +216,27 @@ namespace ERPProject.API
                         List<DailyFileDetails> list = new List<DailyFileDetails>();
                         foreach (DataRow row in dtw.Rows)
                         {
-                            int empid = Convert.ToInt32(row[4]);
 
-                            if (Convert.ToDecimal(row[6]) > 0)
+                            if (row[6].ToString() != "")
                             {
-                                var firstOrDefault = _db.Employees.FirstOrDefault(x => x.Code == (empid));
-                                if (firstOrDefault != null)
-                                    dailyFile.DailyFileDetailses.Add(new DailyFileDetails()
-                                    {
-                                        Net = Convert.ToDecimal(row[6]),
-                                        EmployeeId = firstOrDefault.Id,
-                                        DailyFileId = dailyFile.Id,
-                                        Employee = firstOrDefault
+                                int empid = Convert.ToInt32(row[4]);
 
-                                    });
+                                if (Convert.ToDecimal(row[6]) > 0)
+                                {
+                                    var firstOrDefault = _db.Employees.FirstOrDefault(x => x.Code == (empid));
+                                    if (firstOrDefault != null)
+                                        dailyFile.DailyFileDetailses.Add(new DailyFileDetails()
+                                        {
+                                            Net = Convert.ToDecimal(row[6]),
+                                            EmployeeId = firstOrDefault.Id,
+                                            DailyFileId = dailyFile.Id,
+                                            Employee = firstOrDefault
+
+                                        });
+                                }
                             }
                         }
+                        
                         dailyFile.EmployeesNumber = dailyFile.DailyFileDetailses.Count;
                         dailyFile.FileTotalAmount = dailyFile.DailyFileDetailses.Sum(x => x.Net);
                         _db.DailyFiles.Add(dailyFile);
@@ -224,7 +249,7 @@ namespace ERPProject.API
                     }
                     catch (Exception ex)
                     {
-                        return Request.CreateResponse(HttpStatusCode.ExpectationFailed);
+                        return Request.CreateResponse(HttpStatusCode.ExpectationFailed,ex.Message);
                         //, return Request.CreateErrorResponse(HttpStatusCode.InternalServerError);
                     }
 

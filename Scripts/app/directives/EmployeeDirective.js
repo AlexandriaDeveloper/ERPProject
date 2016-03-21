@@ -28,10 +28,21 @@
         }
     }
 
+    function fileEmployeeDirective() {
+        return {
+
+            restrict: 'E',
+            templateUrl: '../../templates/dailyfile/employee/directives/employeeinfoData.html'
+
+
+
+        }
+    }
 
     angular
         .module('app')
         .directive('employeeDirective', employeeDirective)
         .directive('dailyDirective', dailyDirective)
-        .directive('fileDirective', fileDirective);
+        .directive('fileDirective', fileDirective)
+        .directive('fileEmployeeDirective', fileEmployeeDirective);
 })();

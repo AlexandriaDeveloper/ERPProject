@@ -1,0 +1,62 @@
+﻿<div class="panel panel-default">
+    <div class="panel-heading">
+        <legend>
+            تعديل 
+            <i class="fa fa-edit"></i>
+        </legend>
+
+    </div>
+    <div class="panel-body">
+        <form ng-submit="updateEmpInfo(empInfo)"  class="form-horizontal" novalidate>
+            <fieldset>
+
+                <div class="form-group">
+
+                    <div class="col-lg-10">
+                        <input type="text"
+                               class="form-control"
+                               id="inputEmail"
+                               placeholder="الأسم"
+                               ng-model="empInfo.Employee.Name">
+                    </div>
+                    <label for="inputEmail" class="col-lg-2 control-label">الأسم</label>
+
+                </div>
+                <div class="form-group">
+
+                    <div class="col-lg-10">
+                        <input type="text"
+                               class="form-control"
+                               id="inputEmail"
+                               placeholder="الكود"
+                               ng-model="empInfo.Employee.Code">
+                    </div>
+                    <label for="inputEmail" class="col-lg-2 control-label">الكود</label>
+
+                </div>
+                <div class="form-group">
+
+                    <div class="col-lg-10">
+                        <input type="text"
+                               class="form-control"
+                               id="inputEmail"
+                               placeholder="المبلغ"
+                               ng-model="empInfo.Net">
+                    </div>
+                    <label for="inputEmail" class="col-lg-2 control-label">المبلغ</label>
+
+                </div>
+            </fieldset>
+            <div class="text-center">
+                <button type="submit" class="btn btn-success">
+                    <i class="fa fa-user"></i>
+                    تعديل
+                </button>
+                <a href="/daily/dailyfile/edit/{{empInfo.DailyFileId}}" class="btn btn-primary">
+                    <i class="fa fa-user"></i>
+                    رجوع
+                </a>
+            </div>
+        </form>
+    </div>
+</div>

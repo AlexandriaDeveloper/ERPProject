@@ -74,7 +74,7 @@
                     .error(function () {
                         defferd.reject();
                     });
-                return defferd.promise();
+                return defferd.promise;
             }
 
 

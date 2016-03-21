@@ -18,13 +18,25 @@
             <fieldset>
 
                 <div class="form-group">
-
+                    <div class="col-lg-10">
+                        <input type="text"
+                               class="form-control"
+                               id="inputname"
+                               placeholder="رقم الأستمارة"
+                               ng-model="fileInfo.FileNumberInfo"
+                               ng-req>
+                      
+                    </div>
+                    <label for="inputname"
+                           class="col-lg-2 control-label">
+                        رقم الأستمارة
+                    </label>
                     <div class="col-lg-10">
                         <input type="text"
                                class="form-control"
                                id="inputname"
                                placeholder="عنوان اليومية"
-                               ng-model="fileInfo.Name">
+                               ng-model="fileInfo.Name" required>
                     </div>
                     <label for="inputname"
                            class="col-lg-2 control-label">

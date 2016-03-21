@@ -13,7 +13,7 @@ namespace ERPProject.Models
         [Required]
         public string Name { get; set; }
 
-        public int?    FileNumberInfo  { get; set; }
+        public string    FileNumberInfo  { get; set; }
         public int? EmployeesNumber { get; set; }
 
         public Decimal? FileTotalAmount { get; set; }

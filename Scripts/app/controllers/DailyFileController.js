@@ -7,6 +7,7 @@
     .controller('AddDailyFileController', AddDailyFileController)
       .controller('DetailsDailyFileController', DetailsDailyFileController)
      .controller('DeleteDailyFileController', DeleteDailyFileController)
+      .controller('EmployeeInfoController', EmployeeInfoController)
     ;
 
 
@@ -14,6 +15,7 @@
     AddDailyFileController.$inject = ['$location', '$scope', '$routeParams', 'DailyFile', 'fileUpload'];
     DetailsDailyFileController.$inject = ['$location', '$scope', '$routeParams', 'DailyFile'];
     DeleteDailyFileController.$inject = ['$location', '$scope', '$routeParams', 'DailyFile'];
+    EmployeeInfoController.$inject = ['$location', '$scope', '$routeParams', 'DailyFile'];
     function AddDailyFileController($location, $scope, $routeParams, DailyFile, fileUpload) {
         /* jshint validthis:true */
 
@@ -69,7 +71,7 @@
     }
 
     function DeleteDailyFileController($location, $scope, $routeParams, DailyFile) {
-
+        $scope.edit = true;
         $scope.selectedDailyFile = DailyFile.get({Id: $routeParams.Id });
         $scope.deleteItem = function () {
 
@@ -85,4 +87,14 @@
        
     }
 
+    function EmployeeInfoController($location, $scope, $routeParams, DailyFile) {
+        console.log($routeParams.Id);
+        $scope.empInfo = DailyFile.getEmployeeInfo({ Id: $routeParams.Id });
+        console.log($scope.empInfo);
+        $scope.updateEmpInfo = function (EmpInfo) {
+            console.log(EmpInfo);
+            DailyFile.updateEmpInfo({ EmpInfo: EmpInfo });
+
+        }
+    }
 })();

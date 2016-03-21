@@ -74,7 +74,15 @@
             {
                 templateUrl: 'templates/dailyfile/delete.html',
                 controller: 'DeleteDailyFileController'
-            }).when('/daily/daily/archive/',
+            }).when('/daily/dailyfile/empinfo/:Id',
+            {
+                templateUrl: 'templates/dailyfile/employee/edit.html',
+                controller: 'EmployeeInfoController'
+            })
+
+
+
+            .when('/daily/daily/archive/',
             {
                 templateUrl: 'templates/dailyarchive/index.html',
                 controller: 'DailyArchiveController'

@@ -2,14 +2,18 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.OleDb;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Runtime.InteropServices.ComTypes;
 using System.Security.Cryptography.X509Certificates;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
+using System.Web.Http.Results;
 using ERPProject.Models;
 using Newtonsoft.Json;
 using Excel = Microsoft.Office.Interop.Excel;
@@ -23,7 +27,10 @@ namespace ERPProject.API
         {
             _db = new ERPContext();
             _db.Configuration.ProxyCreationEnabled = false;
-            var result = _db.Dailies.Where(x => x.Open == false).Include("ExpensessType").OrderByDescending(x => x.ClosedDate);
+            var result = _db.Dailies
+                .Where(x => x.Open == false)
+                .Include("ExpensessType")
+                .OrderByDescending(x => x.ClosedDate);
             return Ok(result);
 
         }
@@ -53,7 +60,7 @@ namespace ERPProject.API
         private string filPath = "";
 
         [HttpGet]
-        public IHttpActionResult ExportExcel(int Id)
+        public  IHttpActionResult ExportExcel(int Id)
         {
             _db = new ERPContext();
             var emp = _db.Employees;
@@ -68,66 +75,57 @@ namespace ERPProject.API
                     Net = g.Sum(i => i.Net)
                 }).ToList();
 
-         //   Excel.Application oApp = new Excel.Application();
+      
 
-            string filePath = HttpContext.Current.Server.MapPath("~/Uploads/SourceFile/output.xls");
-            File.Copy(filePath, HttpContext.Current.Server.MapPath("~/Uploads/SourceFile/output2.xls").ToString(), true);
-
-            filePath = HttpContext.Current.Server.MapPath("~/Uploads/SourceFile/output2.xls");
-            //  Excel.Workbook oBook = oApp.Workbooks.Open(filePath);
-            //  Excel.Worksheet oSheet = (Excel.Worksheet)oBook.Sheets.get_Item(1);
-            //Excel.Range  oRange = oSheet.Cells[2, 1] as Excel.Range;
-
-            string filePath2 = HttpContext.Current.Server.MapPath("~/Uploads/SourceFile/ATM.xls");
-            //Excel.Workbook oBook2 = oApp.Workbooks.Open(filePath2);
-            //Excel.Worksheet oSheet2 = (Excel.Worksheet)oBook2.Sheets.get_Item(1);
-            //object misValue = System.Reflection.Missing.Value;
-            BL bl = new BL(@"Provider = Microsoft.ACE.OLEDB.12.0; Data Source = " + filePath2 + "; Extended Properties = Excel 12.0");
-            DataTable dt = new DataTable();
-
-            dt = bl.GetTable("select * from [Sheet1$]");
-            dt.PrimaryKey = new DataColumn[] { dt.Columns[4] };
-            BL b2 =
-                new BL(@"Provider = Microsoft.ACE.OLEDB.12.0; Data Source = " + filePath +
-                        "; Extended Properties = Excel 12.0");
-            DataTable dt2 = new DataTable();
-            foreach (var row in dailydetails)
+            
+            try
             {
-                //  if(row.Code.ToString()== oSheet.Rows.Find(row.Code))
-                var found = dt.Rows.Find(row.Code).ItemArray;
+                string filePath = HttpContext.Current.Server.MapPath("~/Uploads/SourceFile/output.xls");
+              if(!IsFileLocked(new FileInfo(filePath)) 
+               && !IsFileLocked(new FileInfo(HttpContext.Current.Server.MapPath("~/Uploads/SourceFile/output2.xls").ToString())))
+                {
+                    File.Copy(filePath,
+                        HttpContext.Current.Server.MapPath("~/Uploads/SourceFile/output2.xls").ToString(), true);
+                }
+              else
+              {
+                    return   Ok(new { errorMsg = "الملف مفتوح من قبل برنامج اخر" });
 
-                b2.Insert(string.Format("insert into [Sheet1$] values('{0}','{1}','{2}','{3}','{4}','{5}',{6})",
-                    found[0], found[1], found[2], found[3], found[4], found[5], row.Net));
+
+                }
+                filePath = HttpContext.Current.Server.MapPath("~/Uploads/SourceFile/output2.xls");
+                string filePath2 = HttpContext.Current.Server.MapPath("~/Uploads/SourceFile/ATM.xls");
+
+                BL bl = new BL(@"Provider = Microsoft.ACE.OLEDB.12.0; Data Source = " + filePath2 + "; Extended Properties = Excel 12.0");
+                DataTable dt = new DataTable();
+
+                dt = bl.GetTable("select * from [Sheet1$]");
+                dt.PrimaryKey = new DataColumn[] { dt.Columns[4] };
+                BL b2 =
+                    new BL(@"Provider = Microsoft.ACE.OLEDB.12.0; Data Source = " + filePath +
+                            "; Extended Properties = Excel 12.0");
+                DataTable dt2 = new DataTable();
 
 
+
+                foreach (var row in dailydetails)
+                {
+                    //  if(row.Code.ToString()== oSheet.Rows.Find(row.Code))
+                    var found = dt.Rows.Find(row.Code).ItemArray;
+                    b2.Insert(string.Format("insert into [Sheet1$] values('{0}','{1}','{2}','{3}','{4}','{5}',{6})",
+                        found[0], found[1], found[2], found[3], found[4], found[5], row.Net));
+
+                }
+
+                return Ok(new { result = filePath });
             }
-            //   HttpResponseMessage result = null;
+            catch (Exception ex)
+            {
 
+                return Ok(new {errorMsg = ex.Message});
+            }
 
-            //byte[] bytes = Convert.FromBase64String(File.r;
-
-
-            //result = Request.CreateResponse(HttpStatusCode.OK);
-            //result.Content = new ByteArrayContent(bytes);
-            //result.Content.Headers.ContentDisposition = new System.Net.Http.Headers.ContentDispositionHeaderValue("attachment");
-            //result.Content.Headers.ContentDisposition.FileName = file.name + ".pdf";
-
-
-
-
-
-
-            //     MemoryStream ms = new MemoryStream();
-           
-
-
-
-          
-
-
-
-
-            return Ok(new {result= filePath });
+       
         }
 
 
@@ -156,6 +154,32 @@ namespace ERPProject.API
 
     
             return result;
+        }
+
+        protected virtual bool IsFileLocked(FileInfo file)
+        {
+            FileStream stream = null;
+
+            try
+            {
+                stream = file.Open(FileMode.Open, FileAccess.ReadWrite, FileShare.None);
+            }
+            catch (IOException)
+            {
+                //the file is unavailable because it is:
+                //still being written to
+                //or being processed by another thread
+                //or does not exist (has already been processed)
+                return true;
+            }
+            finally
+            {
+                if (stream != null)
+                    stream.Close();
+            }
+
+            //file is not locked
+            return false;
         }
     }
 
