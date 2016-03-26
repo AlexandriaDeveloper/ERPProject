@@ -19,6 +19,13 @@
                     isArray: false
 
                 },
+                getFileDetails: {
+                    url: '/api/DailyFiles/GetDetailsFile/:Id',
+                    method: 'GET',
+                    params: { Id: '@Id' },
+                    isArray: false
+
+                },
                 getEmployeeInfo: {
                     url: '/api/DailyFiles/GetEmployeeInfo/:Id',
                     method: 'GET',
@@ -39,16 +46,25 @@
                     params: { dailyFile: '@dailyFile' }
 
 
+                }, updateEmpInfo2: {
+                    'url': '/api/DailyFiles/UpdateEmpInfo/',
+                    'method': 'GET',
+                    'params': { Code: '@Code', NationalId: '@NationalId' },
+                    isArray: false
                 }, updateEmpInfo: {
                     
-                    url: '/api/DailyFiles/UpdateEmpInfo/:EmpInfo',
+                    url: '/api/DailyFiles/UpdateEmpInfo',
                     method: 'POST',
-                    params: { EmpInfo: '@EmpInfo' },
-                    function() {
-                        console.log('@EmpInfo');
-                    }
+                    params: { DailyFileId: '@DailyFileId', EmployeeId: '@EmployeeId', Net: '@Net' },
+                    isArray:false
+                  
 
 
+                }, getemployee: {
+                    'url': '/api/Report/GetEmployees/',
+                    'method': 'GET',
+                    'params': { Code: '@Code', NationalId: '@NationalId' },
+                    isArray: false
                 },
                 save: {
                     url: '/api/DailyFiles/PostDailyFile/:dailyFile',
@@ -63,8 +79,14 @@
                     'params': { Id: '@Id' }
 
 
-                }
+                },
+                DeleteEmpInfo: {
+                    'url': '/api/DailyFiles/DeleteEmpInfo/:Id',
+                    'method': 'Delete',
+                    'params': { Id: '@Id' }
 
+
+        }
 
             });
         }]);

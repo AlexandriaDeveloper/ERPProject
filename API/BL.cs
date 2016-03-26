@@ -142,8 +142,72 @@ namespace ERPProject.API
             }
 
         }
+        public void update(string text)
+        {
+
+            using (cmd = con.CreateCommand())
+            {
+                cmd.CommandText = text;
+
+                if (con.State == ConnectionState.Closed)
+                {
+                    con.Open();
+                }
 
 
+                OleDbDataAdapter adb = new OleDbDataAdapter();
+                adb.UpdateCommand = cmd;
+                try
+                {
+                    adb.UpdateCommand.ExecuteNonQuery();
+
+                }
+                catch (Exception ex)
+                {
+
+                    // MessageBox.Show(ex.Message);
+                }
+                finally
+                {
+                    con.Close();
+                }
+
+            }
+
+        }
+        public void Delete(string text)
+        {
+
+            using (cmd = con.CreateCommand())
+            {
+                cmd.CommandText = text;
+
+                if (con.State == ConnectionState.Closed)
+                {
+                    con.Open();
+                }
+
+
+                OleDbDataAdapter adb = new OleDbDataAdapter();
+                adb.DeleteCommand = cmd;
+                try
+                {
+                    adb.DeleteCommand.ExecuteNonQuery();
+
+                }
+                catch (Exception ex)
+                {
+
+                    // MessageBox.Show(ex.Message);
+                }
+                finally
+                {
+                    con.Close();
+                }
+
+            }
+
+        }
 
     }
 }

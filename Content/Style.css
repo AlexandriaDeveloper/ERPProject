@@ -38,47 +38,19 @@ body {
     }
 
     .animate-repeat.ng-leave {
-        /*transition:all ease 2s;*/
-        -webkit-animation: slideout .4s ease-out;
+    
+        /*-webkit-animation: slideout .4s ease-out;
         -moz-animation: slideout .4s ease-out;
         -ms-animation: slideout .4s ease-out;
         -o-animation: slideout .4s ease-out;
         animation: slideout .4s ease-out;
         display: block;
-        z-index: 20;
+        z-index: 20;*/
     }
 
-/*.animate-repeat.ng-leave,
-.animate-repeat.ng-move.ng-move-active,*/
-    .animate-repeat.ng-enter {
-        animation: slidein .4s ease-in;
-    }
 
-@keyframes slidein {
 
-    0% {
-        transform: translate3d(-900px, 0px, 0px);
-        animation-timing-function: ease-in;
-    }
 
-    100% {
-        transform: translate3d(0px, 0px, 0px);
-        animation-timing-function: ease-out;
-    }
-}
-
-@keyframes slideout {
-
-    0% {
-        transform: translate3d(0px, 0px, 0px);
-        animation-timing-function: ease-in;
-    }
-
-    100% {
-        transform: translate3d(-900px,0px, 0px);
-        animation-timing-function: ease-out;
-    }
-}
 
 .help-block {
     color: #dc143c;

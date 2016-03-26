@@ -1,6 +1,6 @@
 ﻿
 
-<div ng-show="progressbar">
+<div ng-show="diablebtn">
 
     انتظر قليلا .......
 
@@ -26,17 +26,10 @@
                 <label for="uploadBank" class="col-lg-2 control-label">رفع جميع الموظفين</label>
             </div>
            
-            <div class="form-group">
-
-                <div class="col-lg-10">
-                    <input type="file" class="form-control" name="uploadBank"  file-model="myFile2" />
-                </div>
-
-                <label for="uploadBank" class="col-lg-2 control-label">رفع محولين على بنوك</label>
-            </div>
+         
             <div class="input-group-btn">
                 <div class="col-lg-pull-4">
-                    <button ng-click = "uploadData();" class="btn btn-success">
+                    <button ng-click = "uploadData();" ng-disabled="diablebtn" class="btn btn-success">
                         <i class="fa fa-upload"></i>
                         رفع الملفات
 

@@ -1,10 +1,18 @@
 ﻿
+<a href="/daily/dailyfile/addexpensse/{{fileInfo.Id}}" class="btn btn-success">
+    اضافة صرفية جديدة
+    <i class="fa fa-plus-circle"></i>
+</a>
+<a href="/daily/info/{{fileInfo.DailyId}}" class="btn btn-primary pull-left">
+    رجوع الى اليومية
+    <i class="fa fa-arrow-circle-o-left"></i>
+</a>
 
 <table st-safe-src="rowCollection" st-table="displayed" class="table table-hover table-striped">
     <thead>
         <tr>
             <th colspan="2">
-          
+
             </th>
             <th>
                 الأسم
@@ -60,11 +68,11 @@
         <tr ng-repeat="filedetails in displayed | filter : search.Name" class="animate-repeat">
             <td colspan="2">
                 <div class="input-group-btn btn-group-xs">
-                    <a href="/daily/dailyfile/empinfo/{{filedetails.Id}}" class="btn btn-primary">
+                    <!--<a href="/daily/dailyfile/empinfo/{{filedetails.Id}}" class="btn btn-primary">
                         تعديل
                         <i class="fa fa-edit"></i>
-                    </a>
-                    <a href="#" class="btn btn-danger">
+                    </a>-->
+                    <a href="/daily/dailyfile/deleteexpensse/{{filedetails.Id}}" class="btn btn-danger">
                         حذف
                         <i class="fa fa-remove"></i>
                     </a>

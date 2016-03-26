@@ -14,6 +14,11 @@
                 templateUrl: 'templates/home.html',
                 controller: 'HomeController'
             })
+            .when('/index.html',
+            {
+                templateUrl: 'templates/home.html',
+                controller: 'HomeController'
+            })
             .when('/employee/search',
             {
                 templateUrl: 'templates/employees/search.html',
@@ -66,7 +71,22 @@
             {
                 templateUrl: 'templates/dailyfile/add.html',
                 controller: 'AddDailyFileController'
-            }).when('/daily/dailyfile/edit/:Id',
+            }).when('/daily/dailyfile/adddirect/:Id',
+            {
+                templateUrl: 'templates/dailyfile/adddirect.html',
+                controller: 'AddDailyFileController'
+            }).when('/daily/dailyfile/addexpensse/:Id',
+            {
+                templateUrl: 'templates/dailyfile/employee/addexpensse.html',
+                controller: 'ExpenssesController'
+            })
+            .when('/daily/dailyfile/deleteexpensse/:Id',
+            {
+                templateUrl: 'templates/dailyfile/employee/deleteexpensse.html',
+                controller: 'DeleteExpenssesController'
+            })
+
+            .when('/daily/dailyfile/edit/:Id',
             {
                 templateUrl: 'templates/dailyfile/details.html',
                 controller: 'DetailsDailyFileController'
@@ -98,7 +118,7 @@
             {
                 templateUrl: 'templates/report/employees.html',
                 controller: 'ReportController'
-            });
+            }).otherwise('/');
 
 
 

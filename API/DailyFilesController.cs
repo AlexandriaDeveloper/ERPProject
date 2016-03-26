@@ -52,29 +52,106 @@ namespace ERPProject.API
 
             return Ok(dailyFile);
         }
+
+        [HttpGet]
+        public IHttpActionResult GetDetailsFile(int Id)
+        {
+            var details = _db.DailyFileDetailses.Find(Id);
+            var detailsFile = _db.DailyFiles.Find(details.DailyFileId);
+            var emp = _db.Employees.Find(details.EmployeeId);
+            return Ok(new
+            {
+                dailyName = detailsFile.Name,
+                dailyFileId = details.DailyFileId,
+                empName = emp.Name,
+                empId = emp.Id,
+                net = details.Net
+
+            });
+        }
+
         [HttpGet]
         public IHttpActionResult GetEmployeeInfo(int Id)
         {
-            _db= new ERPContext();
-            var empInfo = _db.DailyFileDetailses.Include("Employee").FirstOrDefault(x=>x.Id== Id);
+            _db = new ERPContext();
+            var empInfo = _db.DailyFileDetailses.Include("Employee").FirstOrDefault(x => x.Id == Id);
             if (empInfo == null)
             {
             }
             return Ok(empInfo);
         }
         [HttpPost]
-        public IHttpActionResult UpdateEmpInfo([FromBody] DailyFileDetails EmpInfo)
+        public IHttpActionResult UpdateEmpInfo(int DailyFileId, int EmployeeId, decimal Net)
         {
 
-            if (EmpInfo != null)
+            var dailyfile = _db.DailyFiles.Find(DailyFileId);
+            var empnum = _db.DailyFileDetailses.Count(x => x.DailyFileId == DailyFileId);
+
+            if (dailyfile != null)
             {
-                _db = new ERPContext();
-                var model = _db.DailyFileDetailses.Find(EmpInfo.Id);
-                model.Net = EmpInfo.Net;
+                dailyfile.DailyFileDetailses = new List<DailyFileDetails>()
+                {
+                    new DailyFileDetails()
+                    {
+                        DailyFileId = DailyFileId,
+                        EmployeeId = EmployeeId,
+                        Net = Net
+                    }
+                };
+                dailyfile.FileTotalAmount += Net;
+                dailyfile.EmployeesNumber = empnum + 1;
+
                 _db.SaveChanges();
 
+                var root = HttpContext.Current.Server.MapPath("~/Uploads/SourceFile/ATM.xls");
+
+                string con1 =
+    (@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + root +
+     ";Extended Properties='Excel 12.0 Xml; HDR = YES; IMEX = 1';");
+
+
+                string con2 = (@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + dailyfile.FilePath +
+    ";Extended Properties='Excel 12.0 Xml; HDR = YES; IMEX = 1';");
+                //string con2 =
+                //  رقم الموظف بجهته الأصلية
+                //string con2 = (@"provider=microsoft.ace.oledb.12.0;data source=c:\file\bank.xls;extended properties='excel 12.0 xml; hdr = yes; imex = 1';");
+                var code = _db.Employees.Find(EmployeeId).Code;
+                BL bl = new BL(con1);
+
+                DataTable dtw = bl.GetTable(String.Format("select * from [Sheet1$] where [{0}] = '" +code.ToString()+"'", "رقم الموظف بجهته الأصلية"));
+                BL bl2 = new BL(con2);
+
+              DataTable dtw2=  bl2.GetTable(String.Format("select * from [Sheet1$] where [{0}] = '" + code.ToString() + "'", "رقم الموظف بجهته الأصلية"));
+
+                if(dtw2.Rows.Count==0)
+                { 
+                bl2.Insert(String.Format("insert into [Sheet1$] values ('{0}','{1}','{2}','{3}','{4}','{5}',{6})"
+                    , dtw.Rows[0].ItemArray[0]
+                    , dtw.Rows[0].ItemArray[1]
+                    , dtw.Rows[0].ItemArray[2]
+                    , dtw.Rows[0].ItemArray[3]
+                    , dtw.Rows[0].ItemArray[4]
+                    , dtw.Rows[0].ItemArray[5]
+                    ,Net
+                    ));
+                }
+                else
+                {
+                    bl2.update(String.Format("update [Sheet1$] set[{1}] =[{1}]+" + Net + " where  [{0}] = '" + code.ToString() + "'",
+                        "رقم الموظف بجهته الأصلية", "المرتب"));
+                }
+                ///		49	23706.61--145     73,984.58
+                //if (EmpInfo != null)
+                //{
+                //    _db = new ERPContext();
+                //    var model = _db.DailyFileDetailses.Find(EmpInfo.Id);
+                //    model.Net = EmpInfo.Net;
+                //    _db.SaveChanges();
+
+                //}
+                return Ok();
             }
-            return Ok();
+            return BadRequest("Wrong Request");
         }
 
         // PUT: api/DailyFiles/5
@@ -149,9 +226,6 @@ namespace ERPProject.API
                             files.Add(Path.GetFileName(file.LocalFileName));
                         }
 
-
-
-
                         //Desirilze Json Data Object 
                         var dailyFile = JsonConvert.DeserializeObject<DailyFile>(model);
 
@@ -163,25 +237,12 @@ namespace ERPProject.API
                             return new HttpResponseMessage(HttpStatusCode.MethodNotAllowed);
                         }
                         //Files Name Counter 
-                        int newname = 0;
-                       
-                        //Catch All Files Inside Source Folder
-                        string[] filesExist = Directory.GetFiles(root,"*.xls")
-                            .Select(path => Path.GetFileName(path))
-                                     .ToArray(); ;
-                        //Loop And Check The right File Name Can Be
-                        foreach (var filename in filesExist)
+                        var newname = CreateFileName(root);
+
+                        if (provider.FileData.Count == 0)
                         {
-                             int t = 0;
-                             
-                            string namewithoutext = filename.Substring(0,filename.Length - 4);
-                            bool numericname = int.TryParse(namewithoutext,out t);
-                            if(t>=newname&& numericname)
-                                
-                                newname= t+1;
+                            File.Copy(HttpContext.Current.Server.MapPath("~/Uploads/SourceFile/output.xls"), root + newname + ".xls", true);
                         }
-
-
                         foreach (MultipartFileData file in provider.FileData)
                         {
                             //get Original File Path 
@@ -190,58 +251,25 @@ namespace ERPProject.API
                             // Move file from Original File Path to new Place
                             try
                             {
-                                File.Move(file.LocalFileName, root + newname + ".xls");
+                                if (file.Headers.ContentDisposition.Size != 0)
+                                {
+                                    File.Move(file.LocalFileName, root + newname + ".xls");
+                                }
+                                else
+                                {
+                                    File.Copy(HttpContext.Current.Server.MapPath("~/Uploads/SourceFile/output.xls"), root + newname + ".xls", true);
+                                }
                             }
-                            catch (Exception ex )
+                            catch (Exception ex)
                             {
 
                                 return Request.CreateResponse(HttpStatusCode.ExpectationFailed, ex.Message);
                             }
-                           
+
 
                         }
-                     
-                        dailyFile.FilePath = root + newname + ".xls";
 
-                        string con =
-               (@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + dailyFile.FilePath + ";Extended Properties='Excel 12.0 Xml; HDR = YES; IMEX = 1';");
-
-                        //string con2 =
-                        //      (@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=c:\File\Bank.xls;Extended Properties='Excel 12.0 Xml; HDR = YES; IMEX = 1';");
-
-                        BL bl = new BL(con);
-
-                        DataTable dtw = bl.GetTable("select * from [Sheet1$]");
-
-                        List<DailyFileDetails> list = new List<DailyFileDetails>();
-                        foreach (DataRow row in dtw.Rows)
-                        {
-
-                            if (row[6].ToString() != "")
-                            {
-                                int empid = Convert.ToInt32(row[4]);
-
-                                if (Convert.ToDecimal(row[6]) > 0)
-                                {
-                                    var firstOrDefault = _db.Employees.FirstOrDefault(x => x.Code == (empid));
-                                    if (firstOrDefault != null)
-                                        dailyFile.DailyFileDetailses.Add(new DailyFileDetails()
-                                        {
-                                            Net = Convert.ToDecimal(row[6]),
-                                            EmployeeId = firstOrDefault.Id,
-                                            DailyFileId = dailyFile.Id,
-                                            Employee = firstOrDefault
-
-                                        });
-                                }
-                            }
-                        }
-                        
-                        dailyFile.EmployeesNumber = dailyFile.DailyFileDetailses.Count;
-                        dailyFile.FileTotalAmount = dailyFile.DailyFileDetailses.Sum(x => x.Net);
-                        _db.DailyFiles.Add(dailyFile);
-                        _db.SaveChanges();
-
+                        InsertIntoDailyFiles(dailyFile, root, newname);
 
 
                         return Request.CreateResponse(HttpStatusCode.OK, files);
@@ -249,51 +277,91 @@ namespace ERPProject.API
                     }
                     catch (Exception ex)
                     {
-                        return Request.CreateResponse(HttpStatusCode.ExpectationFailed,ex.Message);
-                        //, return Request.CreateErrorResponse(HttpStatusCode.InternalServerError);
+                        return Request.CreateResponse(HttpStatusCode.ExpectationFailed, ex.Message);
+
                     }
 
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
 
-                    throw;
+                    return Request.CreateResponse(HttpStatusCode.ExpectationFailed, ex.Message);
                 }
             }
 
 
 
 
-
-
-
-
-
-
-            //var httpRequest = HttpContext.Current.Request;
-            //var root = HttpContext.Current.Server.MapPath("~/Uploads/DailyFiles");
-            //var provider = new MultipartFormDataStreamProvider(root);
-            //var model=  provider.FormData["model"];
-            //var files = provider.FormData["files"];
-            ////var result =await  Request.Content.ReadAsMultipartAsync(provider);
-            ////var model = result.FormData["model"];
-            ////var files = result.FormData["files"];
-
-            //foreach (var file in provider.FileData)
-            //{
-            //    //TODO: Do something with each uploaded file
-            //}
             return Request.CreateResponse(HttpStatusCode.OK, "success!");
-            //dailyFile.CreatedDate = DateTime.UtcNow;
-            //if (!ModelState.IsValid)
-            //{
-            //    return BadRequest(ModelState);
-            //}
 
-            //_db.DailyFiles.Add(dailyFile);
-            //_db.SaveChanges();
+        }
 
-            //return CreatedAtRoute("DefaultApi", new { id = dailyFile.Id }, dailyFile);
+        private void InsertIntoDailyFiles(DailyFile dailyFile, string root, int newname)
+        {
+            dailyFile.FilePath = root + newname + ".xls";
+
+            string con =
+                (@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + dailyFile.FilePath +
+                 ";Extended Properties='Excel 12.0 Xml; HDR = YES; IMEX = 1';");
+
+            //string con2 =
+            //      (@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=c:\File\Bank.xls;Extended Properties='Excel 12.0 Xml; HDR = YES; IMEX = 1';");
+
+            BL bl = new BL(con);
+
+            DataTable dtw = bl.GetTable("select * from [Sheet1$]");
+
+       
+
+            List<DailyFileDetails> list = new List<DailyFileDetails>();
+            foreach (DataRow row in dtw.Rows)
+            {
+                if (row[6].ToString() != "")
+                {
+                    int empid = Convert.ToInt32(row[4]);
+
+                    if (Convert.ToDecimal(row[6]) > 0)
+                    {
+                        var firstOrDefault = _db.Employees.FirstOrDefault(x => x.Code == (empid));
+                        if (firstOrDefault != null)
+                            dailyFile.DailyFileDetailses.Add(new DailyFileDetails()
+                            {
+                                Net = Convert.ToDecimal(row[6]),
+                                EmployeeId = firstOrDefault.Id,
+                                DailyFileId = dailyFile.Id,
+                                Employee = firstOrDefault
+                            });
+                    }
+                }
+            }
+
+            dailyFile.EmployeesNumber = dailyFile.DailyFileDetailses.Count;
+            dailyFile.FileTotalAmount = dailyFile.DailyFileDetailses.Sum(x => x.Net);
+            _db.DailyFiles.Add(dailyFile);
+            _db.SaveChanges();
+        }
+
+        private static int CreateFileName(string root)
+        {
+            int newname = 0;
+
+            //Catch All Files Inside Source Folder
+            string[] filesExist = Directory.GetFiles(root, "*.xls")
+                .Select(path => Path.GetFileName(path))
+                .ToArray();
+
+            //Loop And Check The right File Name Can Be
+            foreach (var filename in filesExist)
+            {
+                int t = 0;
+
+                string namewithoutext = filename.Substring(0, filename.Length - 4);
+                bool numericname = int.TryParse(namewithoutext, out t);
+                if (t >= newname && numericname)
+
+                    newname = t + 1;
+            }
+            return newname;
         }
 
         // DELETE: api/DailyFiles/5
@@ -317,6 +385,46 @@ namespace ERPProject.API
             return Ok(dailyFile);
         }
 
+        [HttpDelete]
+        public IHttpActionResult DeleteEmpInfo(int Id)
+        {
+            var found = _db.DailyFileDetailses.Include("DailyFile").Where(x => x.Id == Id).FirstOrDefault();
+            var code = _db.Employees.Find(found.EmployeeId).Code;
+            var empnum = _db.DailyFileDetailses.Count(x => x.DailyFileId == found.DailyFileId);
+            if (found != null)
+            {
+                try
+                {
+                    string path = found.DailyFile.FilePath;
+                    string con =
+               (@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + path +
+                ";Extended Properties='Excel 12.0 Xml; HDR = YES; IMEX = 1';");
+
+
+
+                    BL bl = new BL(con);
+                    bl.update(String.Format("update [Sheet1$] set[{1}] =[{1}]-"+found.Net.ToString()+" where  [{0}] = '" + code.ToString()+"'",
+                        "رقم الموظف بجهته الأصلية", "المرتب"));
+
+
+                    found.DailyFile.FileTotalAmount -= found.Net;
+                    found.DailyFile.EmployeesNumber = empnum - 1;
+                   
+                    _db.DailyFileDetailses.Remove(found);
+                    _db.SaveChanges();
+
+                    
+                    return Ok();
+                }
+                catch (Exception ex)
+                {
+                    throw  new Exception(ex.Message);
+                    return Conflict();
+                }
+
+            }
+            return Conflict();
+        }
 
 
 

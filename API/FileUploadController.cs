@@ -129,12 +129,12 @@ namespace ERPProject.API
                 }
                _db.SaveChanges();
                 _db.Dispose();
-                if (File.Exists(HttpContext.Current.Server.MapPath("~/Uploads/SourceFile/" + check + ".xls")))
-                {
-                    File.Delete(HttpContext.Current.Server.MapPath("~/Uploads/SourceFile/" + check + ".xls"));
-                }
+                //if (File.Exists(HttpContext.Current.Server.MapPath("~/Uploads/SourceFile/" + check + ".xls")))
+                //{
+                //    File.Delete(HttpContext.Current.Server.MapPath("~/Uploads/SourceFile/" + check + ".xls"));
+                //}
 
-                File.Move(filePath, HttpContext.Current.Server.MapPath("~/Uploads/SourceFile/" + check + ".xls"));
+                //File.Move(filePath, HttpContext.Current.Server.MapPath("~/Uploads/SourceFile/" + check + ".xls"));
 
                 return Ok(new { msg = "success" });
             }

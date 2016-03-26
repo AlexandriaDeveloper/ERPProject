@@ -208,10 +208,13 @@
     <Content Include="templates\dailyarchive\checkinfo.html" />
     <Content Include="templates\dailyarchive\index.html" />
     <Content Include="templates\dailyarchive\test.html" />
+    <Content Include="templates\dailyfile\adddirect.html" />
+    <Content Include="templates\dailyfile\employee\addexpensse.html" />
     <Content Include="templates\dailyfile\delete.html" />
     <Content Include="templates\dailyfile\details.html" />
     <Content Include="templates\dailyfile\directives\dailyFileData.html" />
     <Content Include="templates\dailyfile\edit.html" />
+    <Content Include="templates\dailyfile\employee\deleteexpensse.html" />
     <Content Include="templates\dailyfile\employee\directives\employeeinfoData.html" />
     <Content Include="templates\dailyfile\employee\edit.html" />
     <Content Include="templates\daily\add.html" />

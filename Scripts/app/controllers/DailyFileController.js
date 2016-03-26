@@ -8,6 +8,8 @@
       .controller('DetailsDailyFileController', DetailsDailyFileController)
      .controller('DeleteDailyFileController', DeleteDailyFileController)
       .controller('EmployeeInfoController', EmployeeInfoController)
+       .controller('ExpenssesController', ExpenssesController)
+    .controller('DeleteExpenssesController', DeleteExpenssesController)
     ;
 
 
@@ -16,6 +18,8 @@
     DetailsDailyFileController.$inject = ['$location', '$scope', '$routeParams', 'DailyFile'];
     DeleteDailyFileController.$inject = ['$location', '$scope', '$routeParams', 'DailyFile'];
     EmployeeInfoController.$inject = ['$location', '$scope', '$routeParams', 'DailyFile'];
+    ExpenssesController.$inject = ['$location', '$scope', '$routeParams', 'DailyFile'];
+    DeleteExpenssesController.$inject = ['$location', '$scope', '$routeParams', 'DailyFile'];
     function AddDailyFileController($location, $scope, $routeParams, DailyFile, fileUpload) {
         /* jshint validthis:true */
 
@@ -53,6 +57,7 @@
 
  
         $scope.fileInfo = DailyFile.get({ Id: $routeParams.Id });
+        console.log($scope.fileInfo);
         $scope.rowCollection = [];
         $scope.fileInfo.$promise.then(function(data) {
             console.log(data.DailyFileDetailses);
@@ -95,6 +100,53 @@
             console.log(EmpInfo);
             DailyFile.updateEmpInfo({ EmpInfo: EmpInfo });
 
+        }
+    }
+
+
+    function ExpenssesController($location, $scope, $routeParams, DailyFile) {
+  
+    //    $scope.empInfo = DailyFile.getEmployeeInfo({ Id: $routeParams.Id });
+        $scope.empinfo = {};
+        $scope.getEmpData = function (emp) {
+         
+            $scope.empinfo = DailyFile.getemployee({ Code: emp.Code, NationalId: emp.NationalId });
+           
+        }
+
+
+
+
+        $scope.updateEmpInfo = function (EmpInfo2) {
+
+           
+            console.log(EmpInfo2);
+
+
+            DailyFile.updateEmpInfo({
+                DailyFileId: $routeParams.Id,
+                EmployeeId: EmpInfo2.Id,
+                Net: EmpInfo2.Net
+            }).$promise.then(function() {
+                
+                $location.url('/daily/dailyfile/edit/' + $routeParams.Id);
+            });
+            
+        }
+    }
+
+    function DeleteExpenssesController($location, $scope, $routeParams, DailyFile) {
+
+        $scope.selectedDetails = DailyFile.getFileDetails({ Id: $routeParams.Id });
+        console.log($scope.selectedDetails);
+
+        $scope.deleteDetails= function(data) {
+            console.log(data);
+            DailyFile.DeleteEmpInfo({ Id: $routeParams.Id }).$promise.then(function() {
+                $location.url('/daily/dailyfile/edit/' + data.dailyFileId);
+
+            });
+            
         }
     }
 })();
